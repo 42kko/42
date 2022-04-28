@@ -18,7 +18,7 @@
 // #define HEX_LOW {a,b,c,d,e,f}
 // #define HEX_UP {A,B,C,D,E,F}
 
-int	print_char(va_list ap)
+int	print_char(va_list ap)aa
 {
 	char	c;
 	int		ret;
