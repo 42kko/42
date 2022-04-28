@@ -202,17 +202,17 @@ int ft_printf(const char *format, ...)
 	int		ret;
 	va_list	ap;
 
-	ret == 0;
+	ret = 0;
 	va_start(ap, format);
 	ret = begin_printf(format, ap);
 	return (ret);
 }
 
-int main()
-{
-	char s[] = "ffed";
-	int i1 = 105334;
-	// printf ("%cbc\n", s);
-	int i = ft_printf ("%p\n", i1);
-	printf("%d\n",i);
-}
+// int main()
+// {
+// 	char s[] = "ffed";
+// 	int i1 = 105334;
+// 	// printf ("%cbc\n", s);
+// 	int i = ft_printf ("%p\n", i1);
+// 	printf("%d\n",i);
+// }
