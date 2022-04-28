@@ -11,14 +11,78 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h> // 지울것
 #include <string.h> // 22
 
-// #define HEX_LOW {a,b,c,d,e,f}
-// #define HEX_UP {A,B,C,D,E,F}
+#define HEX_x "0123456789abcedf"
+#define HEX_X "0123456789ABCEDF"
 
-int	print_char(va_list ap)aa
+int	size_base(long long n, int base_len)
+{
+	int	i;
+
+	i = 1;
+	if (n < 0)
+	{
+		n = -n;
+		i++;
+	}
+	while (n >= base_len)
+	{
+		n /= base_len;
+		i++;
+	}
+	return (i);
+}
+
+char	*itoa_base(long long n, int base_len, char *base)
+{
+	char	*ret;
+	int		len;
+
+	len = size_base(n, base_len);
+	if (!(ret = (char *)malloc(sizeof(char) * len + 1)))
+		return (0);
+	if (n < 0)
+	{
+		n = -n;
+		ret[0] = '-';
+	}
+	ret[len] = 0;
+	while (n >= base_len)
+	{
+		ret[--len] = base[n % base_len];
+		n /= base_len;
+	}
+	if (n < base_len)
+		ret[--len] = base[n];
+	return (ret);
+}
+
+char	*itoa_point(long long n, int base_len, char *base)  // 임시로 만든 p옵션 함수
+{
+	char	*ret;
+	int		len;
+
+	len = 8;
+	if (!(ret = (char *)malloc(sizeof(char) * len + 1)))
+		return (0);
+	ret[len] = 0;
+	while (n >= base_len)
+	{
+		ret[--len] = base[n % base_len];
+		n /= base_len;
+	}
+	if (n < base_len)
+		ret[--len] = base[n];
+	while (len >= 0)
+		ret[--len] = '0';
+	return (ret);
+}
+
+int	print_char(va_list ap)
 {
 	char	c;
 	int		ret;
@@ -39,19 +103,51 @@ int	print_string(va_list ap)
 	return (len);
 }
 
-// int	print_point(ap)
-// {
-// 	//포인터의 값은 가리키고잇는 주소값, 또는 포인터의 그 주소값 자체를 받아올수 잇으니 그 int형으로 받아온걸 char 형 16진수로 변경해서 쓸것.
-// 	//16진수로 이루어진 값을 int형태의 10진수로 받을테니 그걸 16진수로 교체후 char형으로 교체해야할 것같음.
-// }
+int	print_point(va_list ap)
+{
+	size_t	i;
+	char	*s;
+
+	i = va_arg(ap, size_t);
+	s = itoa_point(i, 16, HEX_X);
+	write(1, s, strlen(s));
+	return (strlen(s));
+}
 
 int print_digit(va_list ap)
 {
-	int		i;
-	char	*s;
+	long long		i;
+	char			*s;
 
 	i = va_arg(ap, int);
-	s = itoa(i);
+	s = itoa_base(i, 10, HEX_x);
+	write(1, s, strlen(s));
+	return (strlen(s));
+}
+
+int	print_unsigned_digit(va_list ap)
+{
+	unsigned int	i;
+	char			*s;
+ 
+	i = va_arg(ap, int);
+	s = itoa_base(i, 10, HEX_x);
+	write(1, s, strlen(s));
+	return (strlen(s));
+}
+
+int	print_hex(va_list ap, int letter)
+{
+	long long int	i;
+	char			*s;
+
+	i = va_arg(ap, int);
+	if (letter == 0)
+		s = itoa_base(i, 16, HEX_x);
+	else
+		s = itoa_base(i, 16, HEX_X);
+	write(1, s, strlen(s));
+	return (strlen(s));
 }
 
 void	specifier(const char *format, va_list ap, int *ret)
@@ -60,16 +156,16 @@ void	specifier(const char *format, va_list ap, int *ret)
 		*ret += print_char(ap);
 	else if (*format == 's')
 		*ret += print_string(ap);
-	// else if (*format == 'p')
-		// ret += print_point(ap);
+	else if (*format == 'p')
+		*ret += print_point(ap);
 	else if (*format == 'd' || *format == 'i')
-		ret += print_digit(ap);
-	// else if (*format == 'u')
-	// 	ret += print_unsigned_digit(ap);
-	// else if (*format == 'x')
-	// 	ret += print_hex(ap, 0);
-	// else if (*format == 'X')
-	// 	ret += print_hex(ap, 1);
+		*ret += print_digit(ap);
+	else if (*format == 'u')
+		*ret += print_unsigned_digit(ap);
+	else if (*format == 'x')
+		*ret += print_hex(ap, 0);
+	else if (*format == 'X')
+		*ret += print_hex(ap, 1);
 	else if (*format == '%')
 		{
 			write(1, "%", 1);
@@ -115,7 +211,8 @@ int ft_printf(const char *format, ...)
 int main()
 {
 	char s[] = "ffed";
+	int i1 = 105334;
 	// printf ("%cbc\n", s);
-	int i = ft_printf ("abd%s\n", s);
+	int i = ft_printf ("%p\n", i1);
 	printf("%d\n",i);
 }
