@@ -85,8 +85,8 @@ char	*itoa_point(size_t n, int base_len, char *base)  // 임시로 만든 p옵�
 	}
 	if (n < base_len)
 		ret[--define_bit] = base[n];
-	if (define_bit > 0)
-		ret[--define_bit] = '0';
+	while (define_bit >= 0)
+		ret[--define_bit] = 48;
 	return (ret);
 }
 
