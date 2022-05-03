@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 18:33:16 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/03 17:44:37 by kko              ###   ########.fr       */
+/*   Updated: 2022/05/04 01:15:05 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ int	size_base(long long n, int base_len)
 	return (i);
 }
 
+int	system_bit(void)
+{
+	if (sizeof(void *) == 4)
+		return (8);
+	else
+		return (12);
+}
+
 char	*itoa_base(long long n, int base_len, char *base)
 {
 	char	*ret;
@@ -64,19 +72,21 @@ char	*itoa_base(long long n, int base_len, char *base)
 char	*itoa_point(size_t n, int base_len, char *base)  // 임시로 만든 p옵션 함수
 {
 	char	*ret;
-	int		len;
+	int		define_bit;
 	
-	len = size_base(n, base_len);
-	if (!(ret = (char *)malloc(sizeof(char) * len + 1)))
+	define_bit = system_bit();
+	if (!(ret = (char *)malloc(sizeof(char) * define_bit + 1)))
 		return (0);
-	ret[len] = 0;
+	ret[define_bit] = 0;
 	while (n >= base_len)
 	{
-		ret[--len] = base[n % base_len];
+		ret[--define_bit] = base[n % base_len];
 		n /= base_len;
 	}
 	if (n < base_len)
-		ret[--len] = base[n];
+		ret[--define_bit] = base[n];
+	if (define_bit > 0)
+		ret[--define_bit] = '0';
 	return (ret);
 }
 
