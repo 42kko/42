@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 18:33:16 by marvin            #+#    #+#             */
-/*   Updated: 2022/04/26 18:33:16 by marvin           ###   ########.fr       */
+/*   Updated: 2022/05/03 17:44:37 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ char	*itoa_base(long long n, int base_len, char *base)
 	return (ret);
 }
 
-char	*itoa_point(long long n, int base_len, char *base)  // 임시로 만든 p옵션 함수
+char	*itoa_point(size_t n, int base_len, char *base)  // 임시로 만든 p옵션 함수
 {
 	char	*ret;
 	int		len;
-
-	len = 8;
+	
+	len = size_base(n, base_len);
 	if (!(ret = (char *)malloc(sizeof(char) * len + 1)))
 		return (0);
 	ret[len] = 0;
@@ -77,8 +77,6 @@ char	*itoa_point(long long n, int base_len, char *base)  // 임시로 만든 p�
 	}
 	if (n < base_len)
 		ret[--len] = base[n];
-	while (len >= 0)
-		ret[--len] = '0';
 	return (ret);
 }
 
@@ -106,14 +104,16 @@ int	print_string(va_list ap)
 int	print_point(va_list ap)
 {
 	size_t	i;
+	size_t	j;
 	char	*s;
 
-	i = va_arg(ap, size_t);
-	s = itoa_point(i, 16, HEX_X);
-	write(1, s, strlen(s));
-	i = strlen(s);
+	i = (size_t)va_arg(ap, void *);
+	s = itoa_point(i, 16, HEX_x);
+	j = strlen(s);
+	write(1, "0x", 2);
+	write(1, s, j);
 	free(s);
-	return (i);
+	return (j + 2);
 }
 
 int print_digit(va_list ap)
@@ -222,5 +222,5 @@ int main()
 	int i1 = 135513;
 	// printf ("%cbc\n", s);
 	int i = ft_printf ("%p\n", &i1);
-	printf("%d\n",i);
+	ft_printf("%d\n",i);
 }
