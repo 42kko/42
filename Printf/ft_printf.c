@@ -111,7 +111,9 @@ int	print_point(va_list ap)
 	i = va_arg(ap, size_t);
 	s = itoa_point(i, 16, HEX_X);
 	write(1, s, strlen(s));
-	return (strlen(s));
+	i = strlen(s);
+	free(s);
+	return (i);
 }
 
 int print_digit(va_list ap)
@@ -122,7 +124,9 @@ int print_digit(va_list ap)
 	i = va_arg(ap, int);
 	s = itoa_base(i, 10, HEX_x);
 	write(1, s, strlen(s));
-	return (strlen(s));
+	i = strlen(s);
+	free(s);
+	return (i);
 }
 
 int	print_unsigned_digit(va_list ap)
@@ -133,7 +137,9 @@ int	print_unsigned_digit(va_list ap)
 	i = va_arg(ap, int);
 	s = itoa_base(i, 10, HEX_x);
 	write(1, s, strlen(s));
-	return (strlen(s));
+	i = strlen(s);
+	free(s);
+	return (i);
 }
 
 int	print_hex(va_list ap, int letter)
@@ -147,7 +153,9 @@ int	print_hex(va_list ap, int letter)
 	else
 		s = itoa_base(i, 16, HEX_X);
 	write(1, s, strlen(s));
-	return (strlen(s));
+	i = strlen(s);
+	free (s);
+	return (i);
 }
 
 void	specifier(const char *format, va_list ap, int *ret)
@@ -208,11 +216,11 @@ int ft_printf(const char *format, ...)
 	return (ret);
 }
 
-// int main()
-// {
-// 	char s[] = "ffed";
-// 	int i1 = 105334;
-// 	// printf ("%cbc\n", s);
-// 	int i = ft_printf ("%p\n", i1);
-// 	printf("%d\n",i);
-// }
+int main()
+{
+	char s[] = "";
+	int i1 = 135513;
+	// printf ("%cbc\n", s);
+	int i = ft_printf ("%p\n", &i1);
+	printf("%d\n",i);
+}

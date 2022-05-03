@@ -3,8 +3,8 @@
 
 int main()
 {
-	char *s = "abc";
-	int i = 105334;
-	int len = printf ("%p\n", i);
+	char *s = "";
+	int i = 135513;
+	int len = printf ("%x\n", i);
 	printf("%d\n", len);
 }
