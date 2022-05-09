@@ -5,81 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/07 02:15:58 by kko               #+#    #+#             */
-/*   Updated: 2022/05/07 05:53:35 by kko              ###   ########.fr       */
+/*   Created: 2022/05/09 12:35:50 by kko               #+#    #+#             */
+/*   Updated: 2022/05/09 22:17:57 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*reset(char *s)
+char	*reset_s(char *save)
 {
-	int		len;
-	int		i;
+	char	*ret;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while(save[i] && save[i] != '\n')
+		i++;
+	ret = (char *)malloc(sizeof(char) + ft_strlen(save) - i + 1);
+	ret[ft_strlen(save) - i] = 0;
+	while(save[++i])
+	{
+		ret[j] = save[i];
+		j++;
+	}
+	free(save);
+	return(ret);
+}
+
+char	*get_line(char *save)
+{
+	size_t	i;
 	char	*ret;
 
-	len = 0;
-	while (s[len])
-	{
-		if (*s == '\n')
-			break ;
-		len ++;
-	}
-	i = len;
-	while (s[i])
+	i = 0;
+	while(save[i] && save[i] != '\n')
 		i++;
-	ret = (char *)malloc(i - len + 1);
-	if (!ret)
-		return (0);
-	ret[i - len] = 0;
-	while (s[len])
-		s[len] = ret[i - len]; //복사함수로 i에 s개행후 문자를 넣어줌
+	ret = (char *)malloc(sizeof(char) * i + 1);
+	ret[i] = 0;
+	i = 0;
+	while (ret[i])
+	{
+		ret[i] = save[i];
+		i++;
+	}
 	return (ret);
 }
 
-void	return_vul(char *s, char *ret)
+char	*read_buf(char *save, int fd)
 {
-	int	len;
-
-	len = 0;
-	while (*s)
-	{
-		if (*s == '\n')
-			break ;
-		len ++;
-		*s++;
-	}
-	ret = (char *)malloc(len + 1);
-	if (!ret)
-		return ;
-	ret[len] = 0;
-	while (--len > 0)
-		ret[len] = s[len];
-	return ;
-}
-
-void	read_buf(int fd, char *s)
-{
+	char	*buf;
 	ssize_t	i;
-	char	buf[BUFFER_SIZE + 1];
 
+	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buf)
+		return (0);
 	i = read(fd, buf, BUFFER_SIZE);
-	while (i > 0)
+	while(i > 0)
 	{
 		buf[i] = 0;
-		*s = ft_strjoin(buf, s);
-		if (ft_strchr(s, '\n') == 1)
-			return ;
+		save = ft_strjoin(save, buf);
+		if (ft_strchr(buf, '\n'))
+			break;
+		i = read(fd, buf, BUFFER_SIZE);
 	}
+	free(buf);
+	return (save);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*s;
+	static char	*save;
 	char		*ret;
 
-	read_buf(fd, s); //개행전까지 찾음
-	return_vul(s, ret); //개행 전까지의 문자열을 ret에 넣음
-	s = reset(s); // ret에 넣은만큼 s를 비워줌
-	return (ret);
+	save = read_buf(save, fd);
+	ret = get_line(save);
+	save = reset_s(save);
+	return(ret);
 }
