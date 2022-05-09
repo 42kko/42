@@ -6,46 +6,11 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 02:16:39 by kko               #+#    #+#             */
-/*   Updated: 2022/05/09 22:19:41 by kko              ###   ########.fr       */
+/*   Updated: 2022/05/10 03:06:58 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_strjoin(char *s1, char const *s2)
-{
-	char	*ret;
-	size_t	size1;
-	size_t	size2;
-
-	if (!s1)
-	{
-		s1 = (char *)malloc(sizeof(char) * 1);
-		s1[0] = 0;
-	}
-	if (!s1 || !s2)
-		return (0);
-	size1 = ft_strlen(s1);
-	size2 = ft_strlen(s2);
-	ret = (char *)malloc(sizeof(char) * (size1 + size2 + 1));
-	if (!ret)
-		return (0);
-	ft_memcpy(ret, s1, size1);
-	ft_memcpy(ret + size1, s2, size2);
-	ret[size1 + size2] = 0;
-	return (ret);
-}
-
-int	ft_strchr(const char *s, int c)
-{
-	while (*s != (char)c)
-	{
-		if (*s == 0)
-			return (0);
-		s++;
-	}
-	return (1);
-}
 
 size_t	ft_strlen(const char *s)
 {
@@ -71,3 +36,40 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	}
 	return (dst);
 }
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*ret;
+	size_t	size1;
+	size_t	size2;
+
+	if (!s1)
+	{
+		s1 = (char *)malloc(sizeof(char) * 1);
+		s1[0] = 0;
+	}
+	if (!s1 || !s2)
+		return (0);
+	size1 = ft_strlen(s1);
+	size2 = ft_strlen(s2);
+	ret = (char *)malloc(sizeof(char) * (size1 + size2 + 1));
+	if (!ret)
+		return (0);
+	ft_memcpy(ret, s1, size1);
+	ft_memcpy(ret + size1, s2, size2);
+	ret[size1 + size2] = 0;
+	free (s1);
+	return (ret);
+}
+
+int	ft_strchr(const char *s, int c)
+{
+	while (*s != (char)c)
+	{
+		if (*s == 0)
+			return (0);
+		s++;
+	}
+	return (1);
+}
+

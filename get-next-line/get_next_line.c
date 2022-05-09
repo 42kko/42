@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:35:50 by kko               #+#    #+#             */
-/*   Updated: 2022/05/09 22:17:57 by kko              ###   ########.fr       */
+/*   Updated: 2022/05/10 03:06:47 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,18 @@ char	*reset_s(char *save)
 	j = 0;
 	while(save[i] && save[i] != '\n')
 		i++;
-	ret = (char *)malloc(sizeof(char) + ft_strlen(save) - i + 1);
-	ret[ft_strlen(save) - i] = 0;
-	while(save[++i])
+	if (!save[i])
 	{
-		ret[j] = save[i];
-		j++;
+		free(save);
+		return (0);
 	}
+	ret = (char *)malloc(sizeof(char) + ft_strlen(save) - i + 1);
+	if (!ret)
+		return (0);
+	i++;
+	while(save[i])
+		ret[j++] = save[i++];
+	ret[j] = 0;
 	free(save);
 	return(ret);
 }
@@ -39,19 +44,27 @@ char	*get_line(char *save)
 	char	*ret;
 
 	i = 0;
+	if (!save[i])
+		return (0);
 	while(save[i] && save[i] != '\n')
 		i++;
-	ret = (char *)malloc(sizeof(char) * i + 1);
-	ret[i] = 0;
+	ret = (char *)malloc(sizeof(char) * i + 2);
+	if (!ret)
+		return (0);
 	i = 0;
-	while (ret[i])
+	while (save[i] && save[i] != '\n')
 	{
 		ret[i] = save[i];
 		i++;
 	}
+	if (save[i] == '\n')
+	{
+		ret[i] = '\n';
+		i++;
+	}
+	ret[i] = 0;
 	return (ret);
 }
-
 char	*read_buf(char *save, int fd)
 {
 	char	*buf;
@@ -65,7 +78,7 @@ char	*read_buf(char *save, int fd)
 	{
 		buf[i] = 0;
 		save = ft_strjoin(save, buf);
-		if (ft_strchr(buf, '\n'))
+		if (ft_strchr(save, '\n'))
 			break;
 		i = read(fd, buf, BUFFER_SIZE);
 	}
@@ -78,7 +91,11 @@ char	*get_next_line(int fd)
 	static char	*save;
 	char		*ret;
 
+	if(fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
 	save = read_buf(save, fd);
+	if (!save)
+		return (0);
 	ret = get_line(save);
 	save = reset_s(save);
 	return(ret);
