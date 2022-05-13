@@ -68,5 +68,6 @@ int	ft_printf(const char *format, ...)
 	ret = 0;
 	va_start(ap, format);
 	ret = begin_printf(format, ap);
+	va_end(ap);
 	return (ret);
 }
