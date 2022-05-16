@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:35:50 by kko               #+#    #+#             */
-/*   Updated: 2022/05/16 19:47:39 by kko              ###   ########.fr       */
+/*   Updated: 2022/05/16 22:10:06 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*reset_s(char *save)
 {
@@ -83,21 +83,73 @@ char	*read_buf(char *save, int fd)
 			break ;
 		i = read(fd, buf, BUFFER_SIZE);
 	}
+	if (i <= 0)
+	{
+		free(buf);
+		return (0);
+	}
 	free(buf);
 	return (save);
 }
 
+t_list	*find_fd(t_list *lst_buf, int fd)
+{
+	t_list	*new;
+
+	new = 0;
+	while (lst_buf)
+	{
+		if (lst_buf->fd == fd)
+			break ;
+		if (lst_buf->next == 0)
+			{
+				new = new_lst(new, fd);
+				lst_buf->next = new;
+				return(new);
+			}
+		lst_buf = lst_buf->next;
+	}
+	return (lst_buf);
+}
+
+t_list	*new_lst(t_list *lst_buf, int fd)
+{
+	lst_buf = (t_list *)malloc(sizeof(t_list));
+	if (!lst_buf)
+		return (0);
+	lst_buf->fd = fd;
+	lst_buf->next = 0;
+	lst_buf->buf = read_buf(lst_buf->buf, fd);
+	if (!lst_buf->buf)
+		return (0);
+	return (lst_buf);
+}
+
 char	*get_next_line(int fd)
 {
-	static char	*save;
-	char		*ret;
+	static t_list	*head;
+	t_list	*lst_buf;
+	char	*ret;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	save = read_buf(save, fd);
-	if (!save)
-		return (0);
-	ret = get_line(save);
-	save = reset_s(save);
+	lst_buf = 0;
+	if (!head)
+	{
+		head = (t_list *)malloc(sizeof(t_list));
+		if (!head)
+			return (0);
+			head->next = 0;
+	}
+	if (head->next == 0)
+	{
+		lst_buf = new_lst(lst_buf, fd);
+		if (!lst_buf)
+			return (0);
+		head->next = lst_buf;
+	}
+	lst_buf = find_fd(head, fd);
+	ret = get_line(lst_buf->buf);
+	lst_buf->buf = reset_s(lst_buf->buf);
 	return (ret);
 }

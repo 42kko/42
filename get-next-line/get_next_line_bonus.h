@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 02:16:56 by kko               #+#    #+#             */
-/*   Updated: 2022/05/10 16:08:45 by kko              ###   ########.fr       */
+/*   Updated: 2022/05/16 21:37:47 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_list
+{
+	int				fd;
+	char			*buf;
+	struct s_list	*next;
+}	t_list;
+
 char	*reset_s(char *save);
 char	*get_line(char *save);
 char	*read_buf(char *save, int fd);
@@ -22,6 +29,8 @@ char	*get_next_line(int fd);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *s);
+t_list	*find_fd(t_list *lst_buf, int fd);
+t_list	*new_lst(t_list *lst_buf, int fd);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif
