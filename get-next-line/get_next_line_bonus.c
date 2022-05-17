@@ -6,13 +6,13 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:35:50 by kko               #+#    #+#             */
-/*   Updated: 2022/05/16 22:10:06 by kko              ###   ########.fr       */
+/*   Updated: 2022/05/17 22:34:52 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*reset_s(char *save)
+char	*reset_s(char *save, t_list *lst_buf)
 {
 	char	*ret;
 	size_t	i;
@@ -24,7 +24,8 @@ char	*reset_s(char *save)
 		i++;
 	if (!save[i])
 	{
-		free(save);
+		free(lst_buf->buf);
+		free(lst_buf);
 		return (0);
 	}
 	ret = (char *)malloc(sizeof(char) + ft_strlen(save) - i + 1);
@@ -66,11 +67,13 @@ char	*get_line(char *save)
 	return (ret);
 }
 
-char	*read_buf(char *save, int fd)
+char	*read_buf(int fd)
 {
 	char	*buf;
+	char	*save;
 	ssize_t	i;
 
+	save = 0;
 	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buf)
 		return (0);
@@ -96,14 +99,14 @@ t_list	*find_fd(t_list *lst_buf, int fd)
 {
 	t_list	*new;
 
-	new = 0;
+	lst_buf = lst_buf->next;
 	while (lst_buf)
 	{
 		if (lst_buf->fd == fd)
-			break ;
-		if (lst_buf->next == 0)
+			return (lst_buf);
+		else if (lst_buf->next == 0)
 			{
-				new = new_lst(new, fd);
+				new = new_lst(fd);
 				lst_buf->next = new;
 				return(new);
 			}
@@ -112,44 +115,37 @@ t_list	*find_fd(t_list *lst_buf, int fd)
 	return (lst_buf);
 }
 
-t_list	*new_lst(t_list *lst_buf, int fd)
+t_list	*new_lst(int fd)
 {
+	t_list	*lst_buf;
+
 	lst_buf = (t_list *)malloc(sizeof(t_list));
 	if (!lst_buf)
 		return (0);
 	lst_buf->fd = fd;
 	lst_buf->next = 0;
-	lst_buf->buf = read_buf(lst_buf->buf, fd);
+	lst_buf->buf = read_buf(fd);
 	if (!lst_buf->buf)
+	{
+		free(lst_buf);
 		return (0);
+	}
 	return (lst_buf);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_list	*head;
-	t_list	*lst_buf;
-	char	*ret;
+	static t_list	*lst;
+	char			*ret;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	lst_buf = 0;
-	if (!head)
+	if (lst == 0)
 	{
-		head = (t_list *)malloc(sizeof(t_list));
-		if (!head)
+		lst = (t_list *)malloc(sizeof(t_list));
+		if (!lst)
 			return (0);
-			head->next = 0;
+		lst->next = 0;
 	}
-	if (head->next == 0)
-	{
-		lst_buf = new_lst(lst_buf, fd);
-		if (!lst_buf)
-			return (0);
-		head->next = lst_buf;
-	}
-	lst_buf = find_fd(head, fd);
-	ret = get_line(lst_buf->buf);
-	lst_buf->buf = reset_s(lst_buf->buf);
 	return (ret);
 }
