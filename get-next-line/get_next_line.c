@@ -6,11 +6,75 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:35:50 by kko               #+#    #+#             */
-/*   Updated: 2022/05/17 21:55:12 by kko              ###   ########.fr       */
+/*   Updated: 2022/05/18 23:17:18 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+
+# define BUFFER_SIZE 1
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (!dst && !src)
+		return (0);
+	while (i < n)
+	{
+		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+		i++;
+	}
+	return (dst);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*ret;
+	size_t	size1;
+	size_t	size2;
+
+	if (!s1)
+	{
+		s1 = (char *)malloc(sizeof(char) * 1);
+		s1[0] = 0;
+	}
+	if (!s1 || !s2)
+		return (0);
+	size1 = ft_strlen(s1);
+	size2 = ft_strlen(s2);
+	ret = (char *)malloc(sizeof(char) * (size1 + size2 + 1));
+	if (!ret)
+		return (0);
+	ft_memcpy(ret, s1, size1);
+	ft_memcpy(ret + size1, s2, size2);
+	ret[size1 + size2] = 0;
+	free (s1);
+	return (ret);
+}
+
+int	ft_strchr(const char *s, int c)
+{
+	while (*s != (char)c)
+	{
+		if (*s == 0)
+			return (0);
+		s++;
+	}
+	return (1);
+}
 
 char	*reset_s(char *save)
 {
@@ -22,7 +86,7 @@ char	*reset_s(char *save)
 	j = 0;
 	while (save[i] && save[i] != '\n')
 		i++;
-	if (!save[i])
+	if (!save[i])  // eof일때
 	{
 		free(save);
 		return (0);
@@ -100,4 +164,22 @@ char	*get_next_line(int fd)
 	ret = get_line(save);
 	save = reset_s(save);
 	return (ret);
+}
+
+#include <fcntl.h>
+#include <stdio.h>
+
+int main()
+{
+	int fd;
+	char *s;
+
+	fd = open("test.txt", O_RDONLY);
+	s = get_next_line(fd);
+	printf("%s", s);
+	// s = get_next_line(fd);
+	// printf("%s", s);
+	// s = get_next_line(fd);
+	// printf("%s", s);
+	return 0;
 }

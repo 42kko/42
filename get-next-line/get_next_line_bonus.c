@@ -6,37 +6,186 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:35:50 by kko               #+#    #+#             */
-/*   Updated: 2022/05/17 22:34:52 by kko              ###   ########.fr       */
+/*   Updated: 2022/05/19 03:04:28 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+// #include <stdio.h>
 
-char	*reset_s(char *save, t_list *lst_buf)
+// # define BUFFER_SIZE 43
+
+// size_t	ft_strlen(const char *s)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	while (s[i])
+// 		i++;
+// 	return (i);
+// }
+
+// void	*ft_memcpy(void *dst, const void *src, size_t n)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	if (!dst && !src)
+// 		return (0);
+// 	while (i < n)
+// 	{
+// 		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+// 		i++;
+// 	}
+// 	return (dst);
+// }
+
+// char	*ft_strjoin(char *s1, char *s2)
+// {
+// 	char	*ret;
+// 	size_t	size1;
+// 	size_t	size2;
+
+// 	if (!s1)
+// 	{
+// 		s1 = (char *)malloc(sizeof(char) * 1);
+// 		s1[0] = 0;
+// 	}
+// 	if (!s1 || !s2)
+// 		return (0);
+// 	size1 = ft_strlen(s1);
+// 	size2 = ft_strlen(s2);
+// 	ret = (char *)malloc(sizeof(char) * (size1 + size2 + 1));
+// 	if (!ret)
+// 		return (0);
+// 	ft_memcpy(ret, s1, size1);
+// 	ft_memcpy(ret + size1, s2, size2);
+// 	ret[size1 + size2] = 0;
+// 	free (s1);
+// 	return (ret);
+// }
+
+// int	new_line(char *s)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (s[i] != '\n')
+// 	{
+// 		if (s[i] == 0)
+// 			return (0);
+// 		i++;
+// 	}
+// 	return (1);
+// }
+
+t_list	*new_list(int fd)
 {
-	char	*ret;
-	size_t	i;
-	size_t	j;
+	t_list	*lst;
 
-	i = 0;
-	j = 0;
-	while (save[i] && save[i] != '\n')
-		i++;
-	if (!save[i])
+	lst = (t_list *)malloc(sizeof(t_list));
+	if (!lst)
+		return (0);
+	lst->fd = fd;
+	lst->buf = 0;
+	lst->buf = read_buf(lst->buf, fd);
+	if (!lst->buf)
 	{
-		free(lst_buf->buf);
-		free(lst_buf);
+		free(lst);
+		lst = 0;
 		return (0);
 	}
-	ret = (char *)malloc(sizeof(char) + ft_strlen(save) - i + 1);
-	if (!ret)
+	lst->next = 0;
+	return (lst);
+}
+
+t_list	*find_fd(t_list *head, int fd)
+{
+	t_list	*lst;
+	t_list	*tmp;
+
+	lst = head->next;
+	while(lst)
+	{
+		if ((int)lst->fd == fd)
+		{
+			lst->buf = read_buf(lst->buf, fd);
+			return(lst);
+		}
+		tmp = lst;
+		lst = lst->next;
+	}
+	lst = new_list(fd);
+	if (!lst)
 		return (0);
-	i++;
-	while (save[i])
-		ret[j++] = save[i++];
-	ret[j] = 0;
-	free(save);
-	return (ret);
+	tmp->next = lst;
+	return (lst);
+}
+
+t_list	*all_free(t_list *head)
+{
+	t_list	*lst;
+	t_list	*tmp;
+
+	lst = head->next;
+	while(lst)
+	{
+		free(lst->buf);
+		lst->buf = 0;
+		lst = lst->next;
+	}
+	lst = head->next;
+	while(lst)
+	{
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
+		tmp = 0;
+	}
+	free(head);
+	head = 0;
+	return (0);
+}
+
+size_t	num_list(t_list *head, t_list *lst)
+{
+	size_t	i;
+	t_list	*tmp;
+
+	i = 1;
+	tmp = head->next;
+	while (tmp)
+	{
+		if (tmp->fd == lst->fd)
+			break ;
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+char	*read_buf(char *save, int fd)
+{
+	char	*buf;
+	ssize_t	i;
+
+	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buf)
+		return (0);
+	i = read(fd, buf, BUFFER_SIZE);
+	while (i > 0)
+	{
+		buf[i] = 0;
+		save = ft_strjoin(save, buf);
+		if (new_line(save))
+		{
+			break ;
+		}
+		i = read(fd, buf, BUFFER_SIZE);
+	}
+	free(buf);
+	buf = 0;
+	return (save);
 }
 
 char	*get_line(char *save)
@@ -49,7 +198,9 @@ char	*get_line(char *save)
 		return (0);
 	while (save[i] && save[i] != '\n')
 		i++;
-	ret = (char *)malloc(sizeof(char) * i + 2);
+	if (save[i] == '\n')
+		i++;
+	ret = (char *)malloc(sizeof(char) * i + 1);
 	if (!ret)
 		return (0);
 	i = 0;
@@ -67,85 +218,183 @@ char	*get_line(char *save)
 	return (ret);
 }
 
-char	*read_buf(int fd)
+char	*reset_s(char *save)
 {
-	char	*buf;
-	char	*save;
-	ssize_t	i;
+	char	*ret;
+	size_t	i;
+	size_t	j;
 
+	i = 0;
+	j = 0;
+	while (save[i] && save[i] != '\n')
+		i++;
+	if (save[i] == '\n')
+		i++;
+	if (!save[i])
+	{
+		free(save);
+		save = 0;
+		return (0);
+	}
+	ret = (char *)malloc(sizeof(char) + ft_strlen(save) - i + 1);
+	if (!ret)
+		return (0);
+	while (save[i])
+	{
+		ret[j] = save[i];
+		j++;
+		i++;
+	}
+	ret[j] = 0;
+	free(save);
 	save = 0;
-	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!buf)
-		return (0);
-	i = read(fd, buf, BUFFER_SIZE);
-	while (i > 0)
-	{
-		buf[i] = 0;
-		save = ft_strjoin(save, buf);
-		if (ft_strchr(save, '\n'))
-			break ;
-		i = read(fd, buf, BUFFER_SIZE);
-	}
-	if (i <= 0)
-	{
-		free(buf);
-		return (0);
-	}
-	free(buf);
-	return (save);
+	return (ret);
 }
 
-t_list	*find_fd(t_list *lst_buf, int fd)
+void	reset_list(t_list *head, t_list *lst, size_t i)
 {
-	t_list	*new;
+	t_list	*tmp1;
+	t_list	*tmp2;
+	size_t	j;
 
-	lst_buf = lst_buf->next;
-	while (lst_buf)
+	j = 0;
+	tmp1 = head;
+	tmp2 = head;
+	while(j < (i - 1))
 	{
-		if (lst_buf->fd == fd)
-			return (lst_buf);
-		else if (lst_buf->next == 0)
-			{
-				new = new_lst(fd);
-				lst_buf->next = new;
-				return(new);
-			}
-		lst_buf = lst_buf->next;
+		tmp1 = tmp1->next;
+		j++;
 	}
-	return (lst_buf);
+	while(j < (i + 1))
+	{
+		tmp2 = tmp2->next;
+		j++;
+	}
+	tmp1->next = tmp2;
+	free(lst);
+	lst = 0;
+	return ;
 }
 
-t_list	*new_lst(int fd)
+int	arrange(t_list *head, t_list *lst)
 {
-	t_list	*lst_buf;
+	size_t	len;
+	size_t	i;
+	t_list	*tmp;
 
-	lst_buf = (t_list *)malloc(sizeof(t_list));
-	if (!lst_buf)
-		return (0);
-	lst_buf->fd = fd;
-	lst_buf->next = 0;
-	lst_buf->buf = read_buf(fd);
-	if (!lst_buf->buf)
+	len = 0;
+	tmp = head->next;
+	while(tmp)
 	{
-		free(lst_buf);
+		len++;
+		tmp = tmp->next;
+	}
+	i = num_list(head, lst);
+	if (len == 1)
+		return (1);
+	else if (lst->next == 0)
+	{
+		free(lst);
+		lst = 0;
+		while(--i > 0)
+			tmp = head->next;
+		tmp->next = 0;
 		return (0);
 	}
-	return (lst_buf);
+	reset_list(head, lst, i);
+	return (0);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_list	*lst;
-	char			*ret;
-
+	static t_list	*head;
+	t_list	*lst;
+	char	*ret;
+	
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	if (lst == 0)
+	if (head && head->next != 0)
 	{
-		lst = (t_list *)malloc(sizeof(t_list));
+		lst = find_fd(head, fd);
 		if (!lst)
 			return (0);
-		lst->next = 0;
+		if (!lst->buf)
+		{
+			head = all_free(head);
+			lst = 0;
+			return (0);
+		}
 	}
-	return (ret);
+	else
+	{
+		head = (t_list *)malloc(sizeof(t_list));
+		if (!head)
+			return (0);
+		lst = new_list(fd);
+		if (!lst)
+		{
+			free(head);
+			head = 0;
+			return (0);
+		}
+		head->next = lst;
+	}
+	if (!lst)
+	{
+		head = all_free(head);
+		return (0);
+	}
+	ret = get_line(lst->buf);
+	lst->buf = reset_s(lst->buf);
+	if (!lst->buf)
+	{
+		if(arrange(head, lst) == 1)
+			head = all_free(head);
+	}
+	return(ret);
 }
+
+// #include <fcntl.h>
+// #include <stdio.h>
+
+// int main()
+// {
+// 	int fd;
+// 	int fd1;
+// 	int fd2;
+// 	char *s;
+
+// 	fd = open("test.txt", O_RDONLY);
+// 	fd1 = open("test1.txt", O_RDONLY);
+// 	// fd2 = open("test2.txt", O_RDONLY);
+
+
+// 	s = get_next_line(fd);
+// 	printf("%s", s);
+
+// 	s = get_next_line(fd1);
+// 	printf("%s", s);
+
+// 	// s = get_next_line(fd2);
+// 	// printf("%s", s);
+
+// 	// s = get_next_line(fd);
+// 	// printf("%s", s);
+	
+// 	s = get_next_line(fd1);
+// 	printf("%s", s);
+
+// 	// s = get_next_line(fd2);
+// 	// printf("%s", s);
+
+// 	// s = get_next_line(fd);
+// 	// printf("%s", s);
+
+// 	// s = get_next_line(fd1);
+// 	// printf("%s", s);
+
+// 	// s = get_next_line(fd2);
+// 	// printf("%s", s);
+
+// 	return 0;
+// }

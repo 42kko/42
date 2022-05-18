@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 02:16:39 by kko               #+#    #+#             */
-/*   Updated: 2022/05/12 19:31:40 by kko              ###   ########.fr       */
+/*   Updated: 2022/05/19 00:22:42 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,16 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (ret);
 }
 
-int	ft_strchr(const char *s, int c)
+int	new_line(char *s)
 {
-	while (*s != (char)c)
+	int	i;
+
+	i = 0;
+	while (s[i] != '\n')
 	{
-		if (*s == 0)
+		if (s[i] == 0)
 			return (0);
-		s++;
+		i++;
 	}
 	return (1);
 }
