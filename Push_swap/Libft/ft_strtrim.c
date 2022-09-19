@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 19:51:41 by kko               #+#    #+#             */
-/*   Updated: 2022/03/31 21:48:47 by kko              ###   ########.fr       */
+/*   Created: 2022/03/31 19:01:32 by kko               #+#    #+#             */
+/*   Updated: 2022/03/31 20:13:08 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*ret;
-	size_t	size1;
-	size_t	size2;
+	size_t	i;
+	size_t	j;
+	size_t	size;
 
 	if (!s1)
 		return (0);
-	size1 = ft_strlen(s1);
-	size2 = ft_strlen(s2);
-	ret = (char *)malloc(sizeof(char) * (size1 + size2 + 1));
+	i = 0;
+	j = ft_strlen(s1);
+	size = j;
+	while (s1[i] && ft_strchr(set, s1[i]) && size > i)
+		i++;
+	while (s1[j - 1] && ft_strchr(set, s1[j - 1]) && j > i)
+		j--;
+	ret = (char *)malloc(sizeof(char) * (j - i + 1));
 	if (!ret)
 		return (0);
-	ft_memcpy(ret, s1, size1);
-	ft_memcpy(ret + size1, s2, size2);
-	ret[size1 + size2] = 0;
+	ft_memcpy(ret, s1 + i, j - i);
+	ret[j - i] = 0;
 	return (ret);
 }

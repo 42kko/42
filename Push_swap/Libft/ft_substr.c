@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 19:51:41 by kko               #+#    #+#             */
-/*   Updated: 2022/03/31 21:48:47 by kko              ###   ########.fr       */
+/*   Created: 2022/03/31 19:50:10 by kko               #+#    #+#             */
+/*   Updated: 2022/03/31 21:52:57 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*ret;
-	size_t	size1;
-	size_t	size2;
+	size_t	i;
+	size_t	size;
 
-	if (!s1)
+	if (!s)
 		return (0);
-	size1 = ft_strlen(s1);
-	size2 = ft_strlen(s2);
-	ret = (char *)malloc(sizeof(char) * (size1 + size2 + 1));
+	ret = (char *)malloc(sizeof(char) * len + 1);
 	if (!ret)
 		return (0);
-	ft_memcpy(ret, s1, size1);
-	ft_memcpy(ret + size1, s2, size2);
-	ret[size1 + size2] = 0;
+	size = ft_strlen(s);
+	i = 0;
+	while (i < len && start + 1 < size)
+	{
+		ret[i] = s[start + i];
+		i++;
+	}
+	ret[i] = 0;
 	return (ret);
 }
