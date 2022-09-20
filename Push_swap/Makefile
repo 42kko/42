@@ -1,23 +1,31 @@
 NAME = push_swap
 CC = cc
-CFALGS = -Wall -Wextra -Werror
-RM = rm -f
-LIBFT = -Llibft -lft
+CFLAGS = -Wall -Wextra -Werror
+SRCS =	err.c \
+	insert.c \
+	operations.c \
+	parsing.c \
+	print.c \
+	push_swap.c \
+	stack.c \
+	sort.c
 
-SRCS = push_swap.c
 OBJS = $(SRCS:.c=.o)
 
-$(NAME) : ft_libft
-	$(CC) $(OBJS) push_swap.o $(LIBFT) -o $(NAME)
+all: ft_libft $(NAME)
 
-all : $(NAME)
+ft_libft:
+	make -C ./libft
 
-ft_libft :
-	make -C libft
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -o $(NAME)
 
-clean :
-	make -C libft clean
+clean:
+	make -C ./libft clean
+	rm -f $(OBJS)
+
+fclean: clean
+	make -C ./libft fclean
 	rm -f $(NAME)
 
-fclean : clean
-
+re: fclean all

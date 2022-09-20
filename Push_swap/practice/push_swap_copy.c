@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap copy.c                                   :+:      :+:    :+:   */
+/*   push_swap_copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 19:38:16 by kko               #+#    #+#             */
-/*   Updated: 2022/09/20 02:09:23 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/20 05:32:16 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	ft_isdigit(int c)
 		return (0);
 }
 
-int	ft_isspace(char c) //ilbft
+int	ft_isspace(char c)
 {
 	if (c == ' ' || c == '\f' || c == '\n'
 		|| c == '\r' || c == '\t' || c == '\v')
@@ -159,6 +159,12 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
+void	ft_exit(void)
+{
+	printf("error\n");
+	exit(0);
+}
+
 size_t	match_nub(const char *nptr, int sign)
 {
 	size_t	ret;
@@ -167,19 +173,13 @@ size_t	match_nub(const char *nptr, int sign)
 	while ('0' <= *nptr && *nptr <= '9')
 	{
 		ret = (ret * 10) + (*nptr - '0');
-		if (ret > 9223372036854775807 && sign == 1)
-			return (-1);
-		if (ret > 9223372036854775807 && sign == -1)
-			return (0);
+		if (ret > 2147483647 && sign == 1)
+			ft_exit();
+		if (ret > 2147483648 && sign == -1)
+			ft_exit();
 		nptr++;
 	}
 	return (ret);
-}
-
-void	ft_exit(void)
-{
-	printf("error\n");
-	exit(0);
 }
 
 int	ft_atoi(const char *nptr)
@@ -328,7 +328,7 @@ int	*parsing(int ac, char **av)
 	int	k;
 
 	i = figures(ac, av);
-	ret = (int *)malloc(sizeof(i));
+	ret = (int *)malloc(sizeof(int) * i);6
 	i = 0;
 	j = 0;
 	while (i < ac)
@@ -468,7 +468,7 @@ t_node	*make_stack(t_node *head, int ac, char **av)
 		insert(&head, i[j]);
 		j++;
 	}
-	free (i);
+	free(i);
 	return (head);
 }
 
@@ -587,5 +587,5 @@ int	main(int ac, char **av)
 	// 	print_a(head);
 	// 	print_b(b);
 	// }
-	// return 0;
+	return 0;
 }

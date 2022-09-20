@@ -1,18 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/15 17:01:37 by kko               #+#    #+#             */
-/*   Updated: 2022/09/20 05:41:12 by kko              ###   ########.fr       */
+/*   Created: 2022/09/20 02:44:54 by kko               #+#    #+#             */
+/*   Updated: 2022/09/20 03:42:03 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isascii(int c)
+#include "push_swap.h"
+
+void	print_a(t_node *head)
 {
-	if (c >= 1 && c <= 127)
-		return (1);
-	return (0);
+	t_node	*tmp;
+
+	tmp = head;
+	printf("a\n");
+	while (tmp != 0)
+	{
+		printf("%d", tmp->val);
+		tmp = tmp->next;
+		if (tmp != 0)
+			printf(", ");
+	}
+	printf("\n");
+}
+
+void	print_b(t_node *head)
+{
+	t_node	*tmp;
+
+	tmp = head;
+	printf("b\n");
+	while (tmp != 0)
+	{
+		printf("%d", tmp->val);
+		tmp = tmp->next;
+		if (tmp != 0)
+			printf(", ");
+	}
+	printf("\n");
 }

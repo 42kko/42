@@ -3,6 +3,7 @@
 		"get_next_line_bonus.h": "c",
 		"stdlib.h": "c",
 		"ostream": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"push_swap.h": "c"
 	}
 }

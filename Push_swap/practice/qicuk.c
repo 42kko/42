@@ -33,7 +33,7 @@ void	quick(int *arr, int L, int R)
 int	main()
 {
 	int	i;
-	int arr[12] = {1, 5, 3, 8, 4, 9, 1, 6, 2, 3, 4, 5};
+	int arr[12] = {-1, -5, 3, 8, 4, 9, 1, 6, 2, 3, 4, 5};
 
 	quick(arr, 0, 11);
 
