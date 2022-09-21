@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 02:45:12 by kko               #+#    #+#             */
-/*   Updated: 2022/09/20 03:42:37 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/21 21:31:17 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,18 @@ void	insert_p(t_node **head, int i)
 		top->prev = new;
 		*head = new;
 	}
+}
+
+void	insert_t(t_node **head, int i)
+{
+	t_node	*new;
+	t_node	*tail;
+
+	new = (t_node *)malloc(sizeof(t_node));
+	new->val = i;
+	tail = *head;
+	new->prev = 0;
+	new->next = tail;
+	tail->prev = new;
+	*head = new;
 }

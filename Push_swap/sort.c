@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 04:57:43 by kko               #+#    #+#             */
-/*   Updated: 2022/09/20 10:22:28 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/21 21:27:52 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,34 @@ void	quick(int *arr, int L, int R)
 		quick(arr, left, R);
 }
 
-void	ft_sort(int *i, int size)
+void	case_num3(int *i, t_node **head)
+{
+	t_node	*tmp;
+
+	tmp = *head;
+	if (tmp->val == i[1] && tmp->next->val == i[0])
+		ft_sa(tmp);
+	else if (tmp->val == i[2] && tmp->next->val == i[1])
+	{
+		ft_sa(tmp);
+		ft_rra(&tmp);
+	}
+	else if (tmp->val == i[2] && tmp->next->val == i[0])
+		ft_ra(&tmp);
+	else if (tmp->val == i[2] && tmp->next->val == i[0])
+		{
+			ft_sa(tmp);
+			ft_ra(&tmp);
+		}
+	else if (tmp->val == i[1] && tmp->next->val == i[2])
+		ft_rra(&tmp);
+	*head = tmp;
+}
+
+void	ft_sort(int *i, int size, t_node **head)
 {
 	quick(i, 0, size - 1);
 	err_overlap(i, size);
+	if (size == 3)
+		case_num3(i, head);
 }

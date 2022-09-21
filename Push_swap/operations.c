@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 02:43:04 by kko               #+#    #+#             */
-/*   Updated: 2022/09/20 04:55:21 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/21 21:43:52 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,15 @@ void	ft_ra(t_node **head)
 
 void	ft_rra(t_node **head)
 {
-	t_deque	*bot;
-	t_node	*new;
 	t_node	*tmp;
+	t_node	*tmp1;
 
 	tmp = *head;
-	bot = (t_deque *)malloc(sizeof(t_deque));
-	bot = top_bot(tmp);
-	new = (t_node *)malloc(sizeof(t_node));
-	new->val = bot->bottom->val;
-	tmp->prev = new;
-	new->next = tmp;
-	*head = new;
-	free(bot);
-	while (tmp->next != 0)
-		tmp = tmp->next;
-	tmp->prev->next = 0;
-	free(tmp);
+	tmp1 = *head;
+	while (tmp1->next != 0)
+		tmp1 = tmp1->next;
+	insert_t(&tmp, tmp1->val);
+	tmp1->prev->next = 0;
+	free(tmp1);
+	*head = tmp;
 }

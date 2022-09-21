@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 02:47:35 by kko               #+#    #+#             */
-/*   Updated: 2022/09/20 10:09:57 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/21 20:40:55 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,18 @@ t_node	*make_stack(t_node *head, int ac, char **av)
 	int	*i;
 	int	j;
 	int	size;
+	int tmp;
 
 	err(ac, av);
 	i = parsing(ac, av, &size);
+	tmp = size;
 	j = 0;
-	ft_sort(i, size);
 	while (size-- > 0)
 	{
 		insert(&head, i[j]);
 		j++;
 	}
+	ft_sort(i, tmp, &head);
 	free (i);
 	return (head);
 }

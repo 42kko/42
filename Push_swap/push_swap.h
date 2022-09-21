@@ -6,13 +6,13 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 18:58:58 by kko               #+#    #+#             */
-/*   Updated: 2022/09/20 10:29:21 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/21 21:33:02 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-# include "../Libft/libft.h"
+# include "./Libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -51,10 +51,13 @@ void	ft_ra(t_node **head);
 void	ft_rra(t_node **head);
 int		main(int ac, char **av);
 void	quick(int *arr, int L, int R);
-void	ft_sort(int *i, int k);
+void	ft_sort(int *i, int k, t_node **head);
 void	ft_check_minus(char *str);
 int		ft_wordc(const char *s, char c);
 void	err_overlap(int *arr, int size);
+void	case_num3(int *i, t_node **head);
+void	ft_lstclear(t_node **lst);
+void	insert_t(t_node **head, int i);
 
 
 #endif

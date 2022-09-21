@@ -6,11 +6,25 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 19:38:16 by kko               #+#    #+#             */
-/*   Updated: 2022/09/20 09:15:35 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/21 21:48:47 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	ft_lstclear(t_node **lst)
+{
+	t_node	*tmp;
+
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		free(*lst);
+		*lst = tmp;
+	}
+	*lst = 0;
+}
+
 
 int	main(int ac, char **av)
 {
@@ -28,5 +42,7 @@ int	main(int ac, char **av)
 	}
 	print_a(head);
 	print_b(b);
+	ft_lstclear(&head);
+	system("leaks push_swap");
 	return (0);
 }
