@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 04:57:43 by kko               #+#    #+#             */
-/*   Updated: 2022/09/21 21:27:52 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/22 18:00:00 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,25 @@ void	case_num3(int *i, t_node **head)
 	*head = tmp;
 }
 
-void	ft_sort(int *i, int size, t_node **head)
+void	case_num5(int *i, t_node **head, t_node **b)
+{
+	t_node	*tmp;
+	t_node	*tmp1;
+
+	tmp = *head;
+	tmp1 = *b;
+	if (tmp->val == i[0] || tmp->val == i[5])
+		ft_pb(&tmp, b);
+	else
+		ft_ra(&tmp);
+}
+
+void	ft_sort(int *i, int size, t_node **head, t_node **b)
 {
 	quick(i, 0, size - 1);
 	err_overlap(i, size);
 	if (size == 3)
 		case_num3(i, head);
+	if (size == 5)
+		case_num5(i, head, b);
 }

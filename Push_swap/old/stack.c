@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 02:47:35 by kko               #+#    #+#             */
-/*   Updated: 2022/09/21 20:40:55 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/22 16:55:03 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_deque	*top_bot(t_node *head)
 	return (tail);
 }
 
-t_node	*make_stack(t_node *head, int ac, char **av)
+t_node	*make_stack(t_node *head, int ac, char **av, t_node *b)
 {
 	int	*i;
 	int	j;
@@ -53,7 +53,7 @@ t_node	*make_stack(t_node *head, int ac, char **av)
 		insert(&head, i[j]);
 		j++;
 	}
-	ft_sort(i, tmp, &head);
+	ft_sort(i, tmp, &head, &b);
 	free (i);
 	return (head);
 }
