@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 20:59:58 by kko               #+#    #+#             */
-/*   Updated: 2022/09/28 17:23:04 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/28 21:42:55 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,15 @@ void	ft_pa(t_deque *info)
 		return ;
 	else
 		insert_head_a(info, info->top_b->val);
-	tmp = info->top_b->next;
-	free(info->top_b);
-	info->top_b = tmp;
+	if (info->size_b == 1)
+		free(info->top_b);
+	else
+	{
+		tmp = info->top_b->next;
+		free(info->top_b);
+		info->top_b = tmp;
+		info->top_b->prev = 0;
+	}
 	(info->size_b)--;
 	(info->size_a)++;
 	ft_putstr_fd("pa\n", 1);
@@ -57,11 +63,14 @@ void	ft_rrb(t_deque *info)
 	t_node	*tmp;
 	t_node	*tmp1;
 
+	if (info->size_b == 1)
+		return ;
 	tmp = info->bottom_b;
 	tmp1 = info->bottom_b->prev;
 	tmp1->next = 0;
 	tmp->next = info->top_b;
 	tmp->prev = 0;
+	info->top_b->prev = tmp;
 	info->top_b = tmp;
 	info->bottom_b = tmp1;
 	ft_putstr_fd("rrb\n", 1);

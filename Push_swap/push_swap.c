@@ -6,11 +6,29 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 18:03:10 by kko               #+#    #+#             */
-/*   Updated: 2022/09/28 13:18:59 by kko              ###   ########.fr       */
+/*   Updated: 2022/09/28 21:42:34 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	free_all(t_deque *info)
+{
+	t_node	*tmp;
+	t_node	*tmp1;
+
+	free(info->arr);
+	free(info->sorted);
+	while (info->top_a->next)
+	{
+		tmp = info->top_a;
+		tmp1 = info->top_a->next;
+		free(tmp);
+		info->top_a = tmp1;
+	}
+	free(info->top_a);
+	free(info);
+}
 
 void	finish1(t_deque *info, int idx, int min, t_node *p_node)
 {
@@ -41,6 +59,8 @@ void	finish(t_deque *info)
 	p_node = info->top_a;
 	info->rb = 0;
 	info->rrb = 0;
+	info->ra = 0;
+	info->rra = 0;
 	finish1(info, idx, min, p_node);
 	exec_op(info);
 }
@@ -55,24 +75,6 @@ void	sort(t_deque *info)
 		exec_op(info);
 	}
 	finish(info);
-}
-
-void	free_all(t_deque *info)
-{
-	t_node	*tmp;
-	t_node	*tmp1;
-
-	free(info->arr);
-	free(info->sorted);
-	while (info->top_a->next)
-	{
-		tmp = info->top_a;
-		tmp1 = info->top_a->next;
-		free(tmp);
-		info->top_a = tmp1;
-	}
-	free(info->top_a);
-	free(info);
 }
 
 int	main(int ac, char **av)
