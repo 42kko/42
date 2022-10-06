@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 18:31:18 by kko               #+#    #+#             */
-/*   Updated: 2022/09/28 13:19:32 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/06 02:10:39 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_check_array(char *str)
 	while (str[i])
 	{
 		if (ft_isspace(str[i]))
-			return (1);
+			++space;
 		else if (ft_isdigit(str[i]) && space == 1)
 			return (1);
 		if ((str[i] == '-' || str[i] == '+') && !(ft_isdigit(str[i + 1])))
