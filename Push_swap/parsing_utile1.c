@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 18:47:46 by kko               #+#    #+#             */
-/*   Updated: 2022/09/28 17:21:54 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/07 11:17:48 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_putnum(int **ret, int *j, char *av)
 	split = ft_split(av, ' ');
 	while (k > 0)
 	{
-		ret[0][i] = atoi(split[c]);
+		ret[0][i] = ft_atoi(split[c]);
 		i++;
 		k--;
 		c++;
