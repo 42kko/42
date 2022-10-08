@@ -1,46 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err.c                                              :+:      :+:    :+:   */
+/*   check2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 05:14:14 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:41:23 by kko              ###   ########.fr       */
+/*   Created: 2022/10/07 05:22:51 by kko               #+#    #+#             */
+/*   Updated: 2022/10/07 06:50:22 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_exit(char *msg)
-{
-	ft_putstr_fd("Error\n", 1);
-	perror(msg);
-	exit(1);
-}
-
-void	free_all(t_info *info)
+void	free_map(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	if (info->tile)
-		mlx_destroy_image(info->ptr, info->tile);
-	if (info->wall)
-		mlx_destroy_image(info->ptr, info->wall);
-	if (info->collect)
-		mlx_destroy_image(info->ptr, info->collect);
-	if (info->exits)
-		mlx_destroy_image(info->ptr, info->exits);
 	while (info->map[i])
 		free(info->map[i++]);
 	free(info->map);
-	mlx_destroy_window(info->ptr, info->win);
 }
 
-void	free_end(t_info *info)
+void	check_square1(t_info *info, int j)
 {
-	free_all(info);
-	printf("THX\n");
-	exit(0);
+	int	i;
+
+	i = 0;
+	if (info->w != j)
+	{
+		free_map(info);
+		ft_exit("Not square");
+	}
+}
+
+void	check_square(t_info *info)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	map_size(info);
+	while (info->map[i])
+	{
+		j = 0;
+		while (info->map[i][j])
+		{
+			j++;
+		}
+		if (i >= 0)
+			check_square1(info, j);
+		i++;
+	}
+	if (i != info->h)
+	{
+		free_map(info);
+		ft_exit("Not square");
+	}
 }

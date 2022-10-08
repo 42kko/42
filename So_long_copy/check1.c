@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 05:22:51 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:36:40 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/08 22:24:57 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	check_wall(t_info *info)
 	}
 }
 
-void	count_othes(t_info *info, int *p, int *c, int *e)
+void	count_othes(t_info *info, int *e, int *c, int *p)
 {
 	int	i;
 	int	j;
@@ -49,31 +49,30 @@ void	count_othes(t_info *info, int *p, int *c, int *e)
 		j = 0;
 		while (info->map[i][j])
 		{
-			if (info->map[i][j] == 'E')
+			if (info->map[i][j] == 'P')
 			{
 				info->exits_x = i;
 				info->exits_y = j;
-				*e = *e + 1;
-			}
-			else if (info->map[i][j] == 'P')
 				*p = *p + 1;
+			}
+			else if (info->map[i][j] == 'E')
+				*e = *e + 1;
 			else if (info->map[i][j] == 'C')
 				*c = *c + 1;
-			else if(info->map[i][j] != '1')
-				info->map[i][j] = '0';
+			j++;
 		}
 		i++;
 	}
 }
 
-void	check_othes1(t_info *info, int p, int c, int e)
+void	check_othes1(t_info *info, int e, int c, int p)
 {
-	if (p == 0)
+	if (e == 0)
 	{
 		free_map(info);
 		ft_exit("Need a player");
 	}
-	else if (p > 1)
+	else if (e > 1)
 	{
 		free_map(info);
 		ft_exit("Many player");
@@ -83,12 +82,12 @@ void	check_othes1(t_info *info, int p, int c, int e)
 		free_map(info);
 		ft_exit("Need a collection");
 	}
-	else if (e == 0)
+	else if (p == 0)
 	{
 		free_map(info);
 		ft_exit("Need a exit");
 	}
-	else if (e > 1)
+	else if (p > 1)
 	{
 		free_map(info);
 		ft_exit("Many exit");
@@ -97,16 +96,21 @@ void	check_othes1(t_info *info, int p, int c, int e)
 
 void	check_othes(t_info *info)
 {
-	int	p;
-	int	c;
 	int	e;
+	int	c;
+	int	p;
 
-	p = 0;
-	c = 0;
 	e = 0;
-	count_othes(info, &p, &c, &e);
+	c = 0;
+	p = 0;
+	count_othes(info, &e, &c, &p);
 	info->cnt_c = c;
-	check_othes1(info, p, c, e);
+	check_othes1(info, e, c, p);
+}
+
+void	swap_E(t_info *info)
+{
+	
 }
 
 void	check_map(t_info *info)

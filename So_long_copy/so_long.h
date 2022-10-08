@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:23:44 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:39:17 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/07 06:51:40 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_info
 
 char	**ft_split(const char *s, char c);
 size_t	ft_strlen(const char *s);
+
 int		key_press(int keycode, t_info *info);
 void	ft_exit(char *msg);
 void	ft_map(t_info *info);
@@ -89,6 +90,6 @@ void	free_map(t_info *info);
 void	count_othes(t_info *info, int *e, int *c, int *p);
 void	check_othes1(t_info *info, int e, int c, int p);
 void	check_othes(t_info *info);
-void	ft_putstr_fd(char *s, int fd);
+
 
 # endif

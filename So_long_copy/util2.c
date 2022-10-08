@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:22:07 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:39:01 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/07 04:22:19 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,4 @@ size_t	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	size_t	i;
-	size_t	size;
-
-	i = 0;
-	if (!s)
-		return ;
-	size = ft_strlen(s);
-	while (i < size)
-	{
-		write(fd, s + i, 1);
-		i++;
-	}
 }

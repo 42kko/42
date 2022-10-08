@@ -5,6 +5,7 @@
 		"ostream": "c",
 		"stdio.h": "c",
 		"push_swap.h": "c",
-		"push_swap_1.h": "c"
+		"push_swap_1.h": "c",
+		"so_long.h": "c"
 	}
 }

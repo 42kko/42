@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:23:28 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:30:06 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/07 05:15:35 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	get_exits(t_info *info)
 		j = 0;
 		while (j < info->w)
 		{
-			if (info->map[i][j] == 'E')
+			if (info->map[i][j] == 'P')
 			{
 				info->exits_x = i;
 				info->exits_y = j;
@@ -74,7 +74,7 @@ void	get_exits(t_info *info)
 
 void	ft_exits(t_info *info)
 {
-	info->map[info->exits_x][info->exits_y] = 'E';
+	info->map[info->exits_x][info->exits_y] = 'P';
 	put_exits(info, info->exits_x, info->exits_y);
 }
 

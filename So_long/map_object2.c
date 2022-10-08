@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:30:07 by kko               #+#    #+#             */
-/*   Updated: 2022/10/07 05:15:47 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/08 22:29:57 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_player(t_info *info)
 		j = 0;
 		while (j < info->w)
 		{
-			if (info->map[i][j] == 'E')
+			if (info->map[i][j] == 'P')
 			{
 				info->player_x = j;
 				info->player_y = i;
