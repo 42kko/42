@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 05:22:51 by kko               #+#    #+#             */
-/*   Updated: 2022/10/07 06:50:22 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/14 20:33:26 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	check_square1(t_info *info, int j)
 	if (info->w != j)
 	{
 		free_map(info);
-		ft_exit("Not square");
+		ft_exit1("Not square");
 	}
 }
 
@@ -55,6 +55,6 @@ void	check_square(t_info *info)
 	if (i != info->h)
 	{
 		free_map(info);
-		ft_exit("Not square");
+		ft_exit1("Not square");
 	}
 }

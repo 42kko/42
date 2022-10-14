@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:23:30 by kko               #+#    #+#             */
-/*   Updated: 2022/10/11 11:35:16 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/14 20:26:29 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	main(int ac, char **av)
 	t_info	info;
 	char	*a;
 
-	if (ac != 2)
-		return (0);
+	check_ac(ac);
+	check_av(av[1]);
 	a = open_map(av[1]);
 	info.map = ft_split(a, '\n');
 	check_map(&info);

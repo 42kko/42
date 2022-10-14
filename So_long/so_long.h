@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:23:44 by kko               #+#    #+#             */
-/*   Updated: 2022/10/11 11:39:59 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/14 20:30:16 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	**ft_split(const char *s, char c);
 size_t	ft_strlen(const char *s);
 int		key_press(int keycode, t_info *info);
 void	ft_exit(char *msg);
+void	ft_exit1(char *msg);
 void	ft_map(t_info *info);
 void	draw_map(t_info *info);
 char	*open_map(char *map);
@@ -92,5 +93,7 @@ void	check_othes1(t_info *info, int e, int c, int p);
 void	check_othes(t_info *info);
 int		ft_close(t_info *info);
 void	ft_putstr_fd(char *s, int fd);
+void	check_ac(int ac);
+void	check_av(char *av);
 
 #endif

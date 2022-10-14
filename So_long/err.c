@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 05:14:14 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:41:23 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/14 20:25:54 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,16 @@
 
 void	ft_exit(char *msg)
 {
-	ft_putstr_fd("Error\n", 1);
+	ft_putstr_fd("Error\n", 2);
 	perror(msg);
+	exit(1);
+}
+
+void	ft_exit1(char *msg)
+{
+	ft_putstr_fd("Error\n", 1);
+	ft_putstr_fd(msg, 1);
+	ft_putstr_fd("\n", 1);
 	exit(1);
 }
 

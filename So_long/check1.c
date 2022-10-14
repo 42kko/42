@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 05:22:51 by kko               #+#    #+#             */
-/*   Updated: 2022/10/11 11:35:53 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/14 20:32:02 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	check_wall(t_info *info)
 		if (info->map[i][0] != '1' || info->map[i][info->w - 1] != '1')
 		{
 			free_map(info);
-			ft_exit("Map is not surrounded by walls");
+			ft_exit1("Map is not surrounded by walls");
 		}
 		i++;
 	}
@@ -32,7 +32,7 @@ void	check_wall(t_info *info)
 		if (info->map[0][i] != '1' || info->map[info->h - 1][i] != '1')
 		{
 			free_map(info);
-			ft_exit("Map is not surrounded by walls");
+			ft_exit1("Map is not surrounded by walls");
 		}
 		i++;
 	}
@@ -72,27 +72,27 @@ void	check_othes1(t_info *info, int p, int c, int e)
 	if (p == 0)
 	{
 		free_map(info);
-		ft_exit("Need a player");
+		ft_exit1("Need a player");
 	}
 	else if (p > 1)
 	{
 		free_map(info);
-		ft_exit("Many player");
+		ft_exit1("Many player");
 	}
 	else if (c == 0)
 	{
 		free_map(info);
-		ft_exit("Need a collection");
+		ft_exit1("Need a collection");
 	}
 	else if (e == 0)
 	{
 		free_map(info);
-		ft_exit("Need a exit");
+		ft_exit1("Need a exit");
 	}
 	else if (e > 1)
 	{
 		free_map(info);
-		ft_exit("Many exit");
+		ft_exit1("Many exit");
 	}
 }
 
