@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:27:16 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 23:15:28 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/11 11:14:02 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	move_w(t_info *info)
 		info->state_c == info->cnt_c)
 			free_end(info);
 		put_tile(info, info->player_y, info->player_x);
+		info->map[info->player_y][info->player_x] = '0';
 		info->player_y--;
 		info->tmp++;
 		new_pos(info);
@@ -46,6 +47,7 @@ void	move_d(t_info *info)
 		info->state_c == info->cnt_c)
 			free_end(info);
 		put_tile(info, info->player_y, info->player_x);
+		info->map[info->player_y][info->player_x] = '0';
 		info->player_x++;
 		info->tmp++;
 		new_pos(info);
@@ -66,6 +68,7 @@ void	move_s(t_info *info)
 		info->state_c == info->cnt_c)
 			free_end(info);
 		put_tile(info, info->player_y, info->player_x);
+		info->map[info->player_y][info->player_x] = '0';
 		info->player_y++;
 		info->tmp++;
 		new_pos(info);
@@ -86,6 +89,7 @@ void	move_a(t_info *info)
 		info->state_c == info->cnt_c)
 			free_end(info);
 		put_tile(info, info->player_y, info->player_x);
+		info->map[info->player_y][info->player_x] = '0';
 		info->player_x--;
 		info->tmp++;
 		new_pos(info);

@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:26:42 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:07:20 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/11 11:36:18 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,21 @@ int	ft_size(char *map)
 	char	tmp[10000];
 	int		ret;
 	int		fd;
+	int		i;
 
+	i = 0;
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
 		ft_exit("fd value error");
 	while (1)
 	{
 		ret = read(fd, tmp, 10000);
+		i += ret;
 		if (ret == 0)
-			break;
+			break ;
 		else if (ret < 0)
 			ft_exit("read file");
 	}
 	close(fd);
-	return (ret);
+	return (i);
 }

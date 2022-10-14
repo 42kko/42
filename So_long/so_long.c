@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:23:30 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:34:13 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/11 11:35:16 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	draw_map(t_info *info)
 	ft_map(info);
 	info->tmp = 0;
 	mlx_key_hook(info->win, key_press, info);
+	mlx_hook(info->win, 17, 0, &ft_close, info);
 	mlx_loop(info->ptr);
 }
 
@@ -67,7 +68,7 @@ int	main(int ac, char **av)
 	t_info	info;
 	char	*a;
 
-	if (ac != 3)
+	if (ac != 2)
 		return (0);
 	a = open_map(av[1]);
 	info.map = ft_split(a, '\n');

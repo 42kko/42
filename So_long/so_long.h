@@ -6,19 +6,20 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:23:44 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:39:17 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/11 11:39:59 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
-#include <errno.h>
-#include <mlx.h>
-#include <stdlib.h>
+
+# include <stdio.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <string.h>
+# include <errno.h>
+# include <mlx.h>
+# include <stdlib.h>
 
 # define INT_MAX 2147483647
 # define KEY_ESC		53
@@ -89,6 +90,7 @@ void	free_map(t_info *info);
 void	count_othes(t_info *info, int *e, int *c, int *p);
 void	check_othes1(t_info *info, int e, int c, int p);
 void	check_othes(t_info *info);
+int		ft_close(t_info *info);
 void	ft_putstr_fd(char *s, int fd);
 
-# endif
+#endif

@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:22:07 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:39:01 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/11 11:35:23 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,10 @@ void	ft_putstr_fd(char *s, int fd)
 		write(fd, s + i, 1);
 		i++;
 	}
+}
+
+int	ft_close(t_info *info)
+{
+	free_end(info);
+	exit(0);
 }
