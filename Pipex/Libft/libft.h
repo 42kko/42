@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:28:04 by kko               #+#    #+#             */
-/*   Updated: 2022/10/14 13:29:25 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/20 17:29:21 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include "../pipex.h"
 
 typedef struct s_list
 {
@@ -67,6 +68,5 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 // void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-void	ft_exit(void);
 
 #endif

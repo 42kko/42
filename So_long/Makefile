@@ -2,7 +2,7 @@ NAME = so_long
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRCS = so_long.c get_map.c map_object1.c map_object2.c map_utile.c \
-	move.c util1.c util2.c check1.c check2.c err.c
+	move.c util1.c util2.c check1.c check2.c err.c util3.c
 
 OBJS = $(SRCS:.c=.o)
 

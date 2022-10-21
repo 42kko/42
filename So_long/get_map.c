@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:26:42 by kko               #+#    #+#             */
-/*   Updated: 2022/10/14 20:31:25 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/21 11:54:58 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*open_map(char *map)
 	size = ft_size(map);
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
-		ft_exit1("fd value error");
+		ft_exit1("Wrong fd value");
 	a = (char *)malloc(sizeof(char) * (size + 1));
 	if (a == 0)
 		ft_exit("malloc fail");
@@ -34,6 +34,7 @@ char	*open_map(char *map)
 	}
 	a[size] = 0;
 	close(fd);
+	ft_nl(a, size);
 	return (a);
 }
 
@@ -64,7 +65,7 @@ int	ft_size(char *map)
 	i = 0;
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
-		ft_exit1("fd value error");
+		ft_exit1("Wrong fd value");
 	while (1)
 	{
 		ret = read(fd, tmp, 10000);
@@ -75,5 +76,7 @@ int	ft_size(char *map)
 			ft_exit("read file");
 	}
 	close(fd);
+	if (i == 0)
+		ft_exit1("Empty map");
 	return (i);
 }

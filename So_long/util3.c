@@ -1,60 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check2.c                                           :+:      :+:    :+:   */
+/*   util3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 05:22:51 by kko               #+#    #+#             */
-/*   Updated: 2022/10/20 15:14:25 by kko              ###   ########.fr       */
+/*   Created: 2022/10/07 04:22:07 by kko               #+#    #+#             */
+/*   Updated: 2022/10/21 13:17:45 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	free_map(t_info *info)
+void	ft_msg(t_info *info, int i, int j)
 {
-	int	i;
-
-	i = 0;
-	while (info->map[i])
-		free(info->map[i++]);
-	free(info->map);
+	printf("%c: Invalid parameter in map\n", info->map[i][j]);
+	info->map[i][j] = '0';
 }
 
-void	check_square1(t_info *info, int j)
+void	ft_nl(char *a, int size)
 {
 	int	i;
 
 	i = 0;
-	if (info->w != j)
+	if (a[size - 1] == '\n')
 	{
-		free_map(info);
-		ft_exit1("Map is not square");
+		printf("Wrong newline\n");
+		exit(1);
 	}
-}
-
-void	check_square(t_info *info)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	map_size(info);
-	while (info->map[i])
+	while (a[i] && i < size && size != 1)
 	{
-		j = 0;
-		while (info->map[i][j])
+		if (a[i] == '\n')
 		{
-			j++;
+			if (a[i + 1] == '\n' || i == 0)
+			{
+				printf("Wrong newline\n");
+				exit(1);
+			}
 		}
-		if (i >= 0)
-			check_square1(info, j);
 		i++;
 	}
-	if (i != info->h)
+	if (i == 0)
 	{
-		free_map(info);
-		ft_exit1("Map is not square");
+		printf("Invliad map");
+		exit(1);
 	}
 }

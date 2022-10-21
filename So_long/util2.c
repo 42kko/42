@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:22:07 by kko               #+#    #+#             */
-/*   Updated: 2022/10/14 20:30:21 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/20 15:12:55 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ void	check_av(char *av)
 
 	i = ft_strlen(av);
 	if (av[i - 4] != '.')
-		ft_exit1("Extension error");
+		ft_exit1("Wrong extension");
 	if (av[i - 3] != 'b')
-		ft_exit1("Extension error");
+		ft_exit1("Wrong extension");
 	if (av[i - 2] != 'e')
-		ft_exit1("Extension error");
+		ft_exit1("Wrong extension");
 	if (av[i - 1] != 'r')
-		ft_exit1("Extension error");
+		ft_exit1("Wrong extension");
 }

@@ -1,7 +1,7 @@
 NAME = pipex
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror
-SRCS = pipex.c
+CFLAGS = -Wall -Wextra -Werror
+SRCS = pipex.c parsing.c parsing_util.c exec.c
 OBJS = $(SRCS:.c=.o)
 
 all: ft_libft $(NAME)

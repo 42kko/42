@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 05:22:51 by kko               #+#    #+#             */
-/*   Updated: 2022/10/14 20:32:02 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/21 11:36:41 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	count_othes(t_info *info, int *p, int *c, int *e)
 				*p = *p + 1;
 			else if (info->map[i][j] == 'C')
 				*c = *c + 1;
-			else if (info->map[i][j] != '1')
-				info->map[i][j] = '0';
+			else if (info->map[i][j] != '1' && info->map[i][j] != '0')
+				ft_msg(info, i, j);
 			j++;
 		}
 		i++;

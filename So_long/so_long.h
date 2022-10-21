@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:23:44 by kko               #+#    #+#             */
-/*   Updated: 2022/10/14 20:30:16 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/21 11:45:57 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,7 @@ int		ft_close(t_info *info);
 void	ft_putstr_fd(char *s, int fd);
 void	check_ac(int ac);
 void	check_av(char *av);
+void	ft_msg(t_info *info, int i, int j);
+void	ft_nl(char *a, int size);
 
 #endif

@@ -6,11 +6,16 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 18:33:16 by marvin            #+#    #+#             */
-/*   Updated: 2022/05/06 23:25:51 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/20 14:59:26 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+# include <stdarg.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# define HEX_LOW "0123456789abcdef"
+# define HEX_UP "0123456789ABCDEF"
 
 int	size_base(long long n, int base_len)
 {
@@ -119,7 +124,7 @@ int	print_point(va_list ap)
 	char	*s;
 
 	i = (size_t)va_arg(ap, void *);
-	s = itoa_point(i, 16, HEX_x);
+	s = itoa_point(i, 16, HEX_LOW);
 	j = strlen(s);
 	write(1, "0x", 2);
 	write(1, s, j);
@@ -132,8 +137,8 @@ int	print_digit(va_list ap)
 	long long		i;
 	char			*s;
 
-	i = va_arg(ap, int);
-	s = itoa_base(i, 10, HEX_x);
+	i = va_arg(ap, ssize_t);
+	s = itoa_base(i, 10, HEX_LOW);
 	write(1, s, strlen(s));
 	i = strlen(s);
 	free(s);
@@ -146,7 +151,7 @@ int	print_unsigned_digit(va_list ap)
 	char			*s;
  
 	i = va_arg(ap, int);
-	s = itoa_base(i, 10, HEX_x);
+	s = itoa_base(i, 10, HEX_LOW);
 	write(1, s, strlen(s));
 	i = strlen(s);
 	free(s);
@@ -160,9 +165,9 @@ int	print_hex(va_list ap, int letter)
 
 	i = va_arg(ap, unsigned int);
 	if (letter == 0)
-		s = itoa_base(i, 16, HEX_x);
+		s = itoa_base(i, 16, HEX_LOW);
 	else
-		s = itoa_base(i, 16, HEX_X);
+		s = itoa_base(i, 16, HEX_UP);
 	write(1, s, strlen(s));
 	i = strlen(s);
 	free (s);
@@ -226,4 +231,9 @@ int ft_printf(const char *format, ...)
 	va_start(ap, format);
 	ret = begin_printf(format, ap);
 	return (ret);
+}
+
+int main()
+{
+	ft_printf("%x\n", -123);
 }
