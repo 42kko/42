@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 11:52:16 by kko               #+#    #+#             */
-/*   Updated: 2022/10/20 16:37:37 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/24 21:34:45 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
-# include "../Libft/libft.h"
+# include "./Libft/libft.h"
 
 typedef struct s_lst
 {
