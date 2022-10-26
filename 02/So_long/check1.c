@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 05:22:51 by kko               #+#    #+#             */
-/*   Updated: 2022/10/21 11:36:41 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/26 21:25:37 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,6 @@ void	check_othes1(t_info *info, int p, int c, int e)
 	{
 		free_map(info);
 		ft_exit1("Need a exit");
-	}
-	else if (e > 1)
-	{
-		free_map(info);
-		ft_exit1("Many exit");
 	}
 }
 

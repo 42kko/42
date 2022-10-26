@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:37:21 by kko               #+#    #+#             */
-/*   Updated: 2022/10/26 20:53:36 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/26 21:32:14 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,5 @@ int	main(int ac, char **av, char **envp)
 	exec_pipe(&info);
 	free_util(&info);
 	system("leaks pipex");
+	return (0);
 }

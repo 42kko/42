@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:26:42 by kko               #+#    #+#             */
-/*   Updated: 2022/10/21 11:54:58 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/26 21:31:23 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_size(char *map)
 	i = 0;
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
-		ft_exit1("Wrong fd value");
+		ft_exit1("open");
 	while (1)
 	{
 		ret = read(fd, tmp, 10000);

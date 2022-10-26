@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:23:30 by kko               #+#    #+#             */
-/*   Updated: 2022/10/21 11:54:03 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/26 21:32:37 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,25 @@ void	draw_map(t_info *info)
 	mlx_loop(info->ptr);
 }
 
+void	leak()
+{
+	system("leaks so_long");
+}
+
 int	main(int ac, char **av)
 {
+	atexit(leak);
 	t_info	info;
 	char	*a;
 
 	check_ac(ac);
 	check_av(av[1]);
 	a = open_map(av[1]);
+	// a = get_next_line();
 	info.map = ft_split(a, '\n');
 	check_map(&info);
 	free(a);
 	draw_map(&info);
+	system("leaks so_long");
 	return (0);
 }
