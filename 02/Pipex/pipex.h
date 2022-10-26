@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 11:52:16 by kko               #+#    #+#             */
-/*   Updated: 2022/10/26 17:00:25 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/26 20:50:48 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ typedef struct s_lst
 	int		cnt_cmd;
 	char	**path;
 	int		doc;
+	int		*pipe_doc;
 	char	*limiter;
 	int		**pipe;
 }	t_lst;
 
-int		**ft_pipe(int ac);
+int		**ft_pipe(t_lst info);
 void	ft_infile(t_lst *info);
 void	ft_child(t_lst *info, int cur);
 void	ft_parent(t_lst *info, int cur);
@@ -48,12 +49,20 @@ void	add_slash(char **arr);
 void	ft_msg_cmd(char *msg);
 void	ft_exit(char *msg);
 void	split_util(t_lst *info, char *av, int cur);
-
+int		open_util(t_lst *info);
 
 char	*reset_s(char *save);
 char	*get_line(char *save);
 char	*read_buf(char *save, int fd);
 char	*get_next_line(int fd);
 
+void	writedoc(char *limiter, int fd);
+void	heredoc(t_lst *info);
+int		open_util(t_lst *info);
+
+void	free_cmd(t_lst *info);
+void	free_doc(t_lst *info);
+void	free_pipe(t_lst *info);
+void	free_util(t_lst *info);
 
 #endif

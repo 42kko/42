@@ -1,18 +1,35 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   getline.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/26 16:48:20 by kko               #+#    #+#             */
-/*   Updated: 2022/10/26 19:02:29 by kko              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-#include "pipex.h"
+# define BUFFER_SIZE 1
 
-char	*ft_strjoin_get(char *s1, char *s2)
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (!dst && !src)
+		return (0);
+	while (i < n)
+	{
+		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+		i++;
+	}
+	return (dst);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*ret;
 	size_t	size1;
@@ -37,6 +54,17 @@ char	*ft_strjoin_get(char *s1, char *s2)
 	return (ret);
 }
 
+int	ft_strchr(const char *s, int c)
+{
+	while (*s != (char)c)
+	{
+		if (*s == 0)
+			return (0);
+		s++;
+	}
+	return (1);
+}
+
 char	*reset_s(char *save)
 {
 	char	*ret;
@@ -47,7 +75,7 @@ char	*reset_s(char *save)
 	j = 0;
 	while (save[i] && save[i] != '\n')
 		i++;
-	if (!save[i])
+	if (!save[i])  // eof일때
 	{
 		free(save);
 		return (0);
@@ -103,7 +131,7 @@ char	*read_buf(char *save, int fd)
 	while (i > 0)
 	{
 		buf[i] = 0;
-		save = ft_strjoin_get(save, buf);
+		save = ft_strjoin(save, buf);
 		if (ft_strchr(save, '\n'))
 			break ;
 		i = read(fd, buf, BUFFER_SIZE);
@@ -125,4 +153,44 @@ char	*get_next_line(int fd)
 	ret = get_line(save);
 	save = reset_s(save);
 	return (ret);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	size_t	i;
+	size_t	size;
+
+	i = 0;
+	if (!s)
+		return ;
+	size = ft_strlen(s);
+	while (i < size)
+	{
+		write(fd, s + i, 1);
+		i++;
+	}
+}
+
+int main()
+{
+	char *line;
+	pid_t pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		while(1)
+		{
+			ft_putstr_fd("pipex here_doc> ", 1);
+			line = get_next_line(0);
+			ft_putstr_fd(line, 1);
+			if (ft_strchr(line, ' '))
+				exit(0);
+		}
+	}
+	else if (pid != 0)
+	{
+		waitpid(pid, 0, 0);
+		printf("hi\n");
+	}
 }

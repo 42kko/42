@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:28:04 by kko               #+#    #+#             */
-/*   Updated: 2022/10/26 17:01:49 by kko              ###   ########.fr       */
+/*   Updated: 2022/10/26 20:49:31 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void	split_util(t_lst *info, char *av, int cur)
 
 	size = ft_strlen(av);
 	av_tmp = ft_strtrim(av, " ");
-	if (ft_strnstr(av_tmp, "awk", size) == 0)  // awk 없음
+	if (ft_strnstr(av_tmp, "awk", size) == 0)
 		info->cmd[cur] = ft_split(av_tmp, ' ');
-	else // awk 있음.
+	else
 	{
-		if(ft_strchr(av_tmp, '\'') == 0) // 작은따옴표가 없음.
+		if (ft_strchr(av_tmp, '\'') == 0)
 			info->cmd[cur] = ft_split(av_tmp, '\"');
 		else
 			info->cmd[cur] = ft_split(av_tmp, '\'');
@@ -85,36 +85,16 @@ void	put_cmd(t_lst *info, char **av)
 	int	i;
 
 	i = 0;
-	if (info->doc == 1)
-		i = 1;
 	while (i < info->cnt_cmd)
 	{
-		// info->cmd[i] = ft_split(av[i + 2], ' ');  //awk 일땐 스플릿기준을 바꿔야함.
-		split_util(info, av[i + 2], i);
+		if (info->doc == 0)
+			split_util(info, av[i + 2], i);
+		else if (info->doc == 1)
+			split_util(info, av[i + 3], i);
 		if (ft_strchr(info->cmd[i][0], '/') != 0)
 			ft_path(info, i);
 		else
 			put_path(info, info->cmd[i][0], i);
 		i++;
 	}
-}
-
-void	parse_cmd(t_lst *info, int ac, char **av, char **envp)
-{
-	if (av[1] && !ft_strncmp(av[1], "here_doc", 8) && av[1][8] == '\0')
-	{
-		info->doc = 1;
-		info->limiter = strdup(av[2]);
-		if (ac != 6)
-			ft_exit("error: argument");
-	}
-	else if (open(info->infile, O_RDONLY) < 0)
-	{
-		ft_putstr_fd(info->infile, 2);
-		ft_exit(": no such file or directory");
-		info->infile = ft_strdup(av[1]);
-	}
-	info->path = find_path(envp);
-	info->envp = envp;
-	put_cmd(info, av);
 }
