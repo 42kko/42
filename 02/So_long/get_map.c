@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:26:42 by kko               #+#    #+#             */
-/*   Updated: 2022/11/01 12:07:08 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/01 17:30:50 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*open_map(char *map)
 	if (i < 0)
 	{
 		free(a);
-		ft_exit("read file");
+		ft_exit("read fail");
 	}
 	a[size] = 0;
 	close(fd);
@@ -73,10 +73,10 @@ int	ft_size(char *map)
 		if (ret == 0)
 			break ;
 		else if (ret < 0)
-			ft_exit("read file");
+			ft_exit("read fail");
 	}
 	close(fd);
-	if (i < 2)
+	if (i == 1)
 		ft_exit1("Empty map");
 	return (i);
 }

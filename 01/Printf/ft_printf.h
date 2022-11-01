@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:58:27 by kko               #+#    #+#             */
-/*   Updated: 2022/05/07 01:38:55 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/01 13:00:27 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include "../Libft/libft.h"
+// # include "../Libft/libft.h"
 # define HEX_LOW "0123456789abcdef"
 # define HEX_UP "0123456789ABCDEF"
 

@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:37:21 by kko               #+#    #+#             */
-/*   Updated: 2022/10/26 21:32:14 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/01 18:18:32 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,8 @@ void	parse_cmd(t_lst *info, int ac, char **av, char **envp)
 	put_cmd(info, av);
 }
 
-void	leak()
-{
-	system("leaks pipex");
-}
-
 int	main(int ac, char **av, char **envp)
 {
-	atexit(leak);
 	t_lst	info;
 
 	cnt_cmd(&info, ac);
@@ -75,6 +69,5 @@ int	main(int ac, char **av, char **envp)
 	info.outfile = ft_strdup(av[ac - 1]);
 	exec_pipe(&info);
 	free_util(&info);
-	system("leaks pipex");
 	return (0);
 }

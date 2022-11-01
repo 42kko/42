@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:30:05 by kko               #+#    #+#             */
-/*   Updated: 2022/10/26 20:48:14 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/01 18:28:19 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ void	ft_parent(t_lst *info, int cur)
 {
 	if (cur < info->cnt_cmd - 1)
 		close(info->pipe[cur][1]);
+	if (!ft_strnstr(info->cmd[cur][0], "/bin/sleep", ft_strlen("/bin/sleep")))
+	{
+		
+		wait(0);
+	}
 }
 
 void	exec_pipe(t_lst *info)
@@ -86,8 +91,10 @@ void	exec_pipe(t_lst *info)
 		else if (pid == 0)
 			ft_child(info, i);
 		else
+		{
 			ft_parent(info, i);
+		}
 		i++;
 	}
-	waitpid(pid, NULL, WNOHANG);
+	waitpid(0, NULL, WNOHANG);
 }
