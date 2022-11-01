@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:23:28 by kko               #+#    #+#             */
-/*   Updated: 2022/10/08 22:30:06 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/01 12:42:23 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,33 +49,17 @@ void	ft_tile1(t_info *info)
 	}
 }
 
-void	get_exits(t_info *info)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	info->state_exits = 0;
-	while (i < info->h)
-	{
-		j = 0;
-		while (j < info->w)
-		{
-			if (info->map[i][j] == 'E')
-			{
-				info->exits_x = i;
-				info->exits_y = j;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
 void	ft_exits(t_info *info)
 {
-	info->map[info->exits_x][info->exits_y] = 'E';
-	put_exits(info, info->exits_x, info->exits_y);
+	int	i;
+
+	i = 0;
+	while (info->exit_cnt > i)
+	{
+		info->map[info->exits_x[i]][info->exits_y[i]] = 'E';
+		put_exits(info, info->exits_x[i], info->exits_y[i]);
+		i++;
+	}
 }
 
 void	ft_wall(t_info *info)

@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 05:14:14 by kko               #+#    #+#             */
-/*   Updated: 2022/10/14 20:25:54 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/01 12:45:03 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	free_all(t_info *info)
 		mlx_destroy_image(info->ptr, info->exits);
 	while (info->map[i])
 		free(info->map[i++]);
+	free(info->exits_x);
+	free(info->exits_y);
 	free(info->map);
 	mlx_destroy_window(info->ptr, info->win);
 }

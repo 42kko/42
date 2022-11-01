@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 05:22:51 by kko               #+#    #+#             */
-/*   Updated: 2022/10/26 21:25:37 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/01 12:54:29 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,7 @@ void	count_othes(t_info *info, int *p, int *c, int *e)
 		while (info->map[i][j])
 		{
 			if (info->map[i][j] == 'E')
-			{
-				info->exits_x = i;
-				info->exits_y = j;
 				*e = *e + 1;
-			}
 			else if (info->map[i][j] == 'P')
 				*p = *p + 1;
 			else if (info->map[i][j] == 'C')
@@ -101,6 +97,7 @@ void	check_othes(t_info *info)
 	c = 0;
 	e = 0;
 	count_othes(info, &p, &c, &e);
+	count_exit(info, e);
 	info->cnt_c = c;
 	check_othes1(info, p, c, e);
 }

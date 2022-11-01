@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:23:44 by kko               #+#    #+#             */
-/*   Updated: 2022/10/21 11:45:57 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/01 12:54:42 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ typedef struct s_info
 	int		state_c;
 	void	*param;
 	int		tmp;
-	int		exits_x;
-	int		exits_y;
+	int		exit_cnt;
+	int		*exits_x;
+	int		*exits_y;
 	int		plag;
 }	t_info;
 
@@ -97,5 +98,7 @@ void	check_ac(int ac);
 void	check_av(char *av);
 void	ft_msg(t_info *info, int i, int j);
 void	ft_nl(char *a, int size);
+void	count_exit(t_info *info, int e);
+void	malloc_exit(t_info *info, int e);
 
 #endif

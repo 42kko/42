@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 04:22:07 by kko               #+#    #+#             */
-/*   Updated: 2022/10/21 13:17:45 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/01 12:55:13 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,41 @@ void	ft_nl(char *a, int size)
 	{
 		printf("Invliad map");
 		exit(1);
+	}
+}
+
+void	malloc_exit(t_info *info, int e)
+{
+	info->exits_x = (int *)malloc(sizeof(int) * e);
+	if (!info->exits_x)
+		ft_exit("malloc fail");
+	info->exits_y = (int *)malloc(sizeof(int) * e);
+	if (!info->exits_y)
+		ft_exit("malloc fail");
+}
+
+void	count_exit(t_info *info, int e)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	info->exit_cnt = 0;
+	malloc_exit(info, e);
+	while (info->map[i])
+	{
+		j = 0;
+		while (info->map[i][j])
+		{
+			if (info->map[i][j] == 'E')
+			{
+				info->exits_x[info->exit_cnt] = i;
+				info->exits_y[info->exit_cnt] = j;
+				info->exit_cnt++;
+			}
+			j++;
+		}
+		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:23:30 by kko               #+#    #+#             */
-/*   Updated: 2022/10/26 21:32:37 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/01 12:57:43 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,22 @@ int	key_press(int keycode, t_info *info)
 	return (0);
 }
 
+void	set_map(t_info *info)
+{
+	info->tile = 0;
+	info->wall = 0;
+	info->collect = 0;
+	info->player = 0;
+	info->exits = 0;
+}
+
 void	ft_map(t_info *info)
 {
+	set_map(info);
 	ft_tile1(info);
 	ft_wall(info);
 	ft_collect(info);
 	ft_player(info);
-	get_exits(info);
 	ft_exits(info);
 }
 
@@ -63,25 +72,17 @@ void	draw_map(t_info *info)
 	mlx_loop(info->ptr);
 }
 
-void	leak()
-{
-	system("leaks so_long");
-}
-
 int	main(int ac, char **av)
 {
-	atexit(leak);
 	t_info	info;
 	char	*a;
 
 	check_ac(ac);
 	check_av(av[1]);
 	a = open_map(av[1]);
-	// a = get_next_line();
 	info.map = ft_split(a, '\n');
 	check_map(&info);
 	free(a);
 	draw_map(&info);
-	system("leaks so_long");
 	return (0);
 }
