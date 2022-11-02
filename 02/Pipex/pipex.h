@@ -6,13 +6,12 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 11:52:16 by kko               #+#    #+#             */
-/*   Updated: 2022/11/02 11:45:34 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/03 08:53:40 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>

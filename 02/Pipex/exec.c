@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:30:05 by kko               #+#    #+#             */
-/*   Updated: 2022/11/02 20:12:24 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/03 08:50:25 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_parent(t_lst *info, int cur)
 	if (info->cnt_cmd > cur + 2)
 	{
 		if (pipe(info->pipe[cur + 1]) < 0)
-			ft_exit("pipe");
+			ft_exit("pipe error");
 	}
 }
 

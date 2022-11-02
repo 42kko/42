@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:37:21 by kko               #+#    #+#             */
-/*   Updated: 2022/11/02 20:13:18 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/03 08:53:06 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,10 @@ int	main(int ac, char **av, char **envp)
 	{
 		info.pipe_doc = (int *)malloc(sizeof(int) * 2);
 		if (pipe(info.pipe_doc) < 0)
-			ft_exit("pipe");
+			ft_exit("pipe error");
 	}
 	info.outfile = ft_strdup(av[ac - 1]);
 	exec_pipe(&info);
 	free_util(&info);
-	// system("leaks pipex");
 	return (0);
 }
