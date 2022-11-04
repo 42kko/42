@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:47:41 by kko               #+#    #+#             */
-/*   Updated: 2022/11/02 20:09:18 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/04 09:49:06 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,16 @@ int	open_util(t_lst *info)
 	int	fd;
 
 	if (info->doc == 1)
+	{
 		fd = open(info->outfile, O_WRONLY | O_APPEND | O_CREAT, 0644);
+		if (fd < 0)
+			ft_exit("open error");
+	}
 	else
+	{
 		fd = open(info->outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		if (fd < 0)
+			ft_exit("open error");
+	}
 	return (fd);
 }

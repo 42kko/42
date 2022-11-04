@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:30:05 by kko               #+#    #+#             */
-/*   Updated: 2022/11/03 08:50:25 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/04 10:58:19 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_getfile(t_lst *info)
 		dup2(fd, STDIN);
 		dup2(info->pipe[0][PIPE_W], STDOUT);
 		close(fd);
+		close(info->pipe[0][PIPE_W]);
 		execve(info->cmd[0][0], info->cmd[0], info->envp);
 	}
 	if (info->doc == 1)
@@ -50,13 +51,16 @@ void	ft_child(t_lst *info, int cur)
 		dup2(info->pipe[cur - 1][PIPE_R], STDIN);
 		dup2(fd, STDOUT);
 		close(fd);
+		close(info->pipe[cur - 1][PIPE_R]);
 		execve(info->cmd[cur][0], info->cmd[cur], info->envp);
 	}
 	else
 	{
+		close(info->pipe[cur][PIPE_R]);
 		dup2(info->pipe[cur - 1][PIPE_R], STDIN);
 		dup2(info->pipe[cur][PIPE_W], STDOUT);
 		close(info->pipe[cur][PIPE_W]);
+		close(info->pipe[cur - 1][PIPE_R]);
 		execve(info->cmd[cur][0], info->cmd[cur], info->envp);
 	}
 	free_util(info);
@@ -74,12 +78,15 @@ void	ft_parent(t_lst *info, int cur)
 		if (pipe(info->pipe[cur + 1]) < 0)
 			ft_exit("pipe error");
 	}
+	if (cur > 1 && info->cnt_cmd > cur)
+		close(info->pipe[cur - 2][PIPE_R]);
 }
 
 void	exec_pipe(t_lst *info)
 {
 	pid_t	pid;
 	int		i;
+	int		tmp;
 
 	i = 0;
 	if (info->doc == 1)
@@ -98,7 +105,8 @@ void	exec_pipe(t_lst *info)
 		}
 		i++;
 	}
-	i = info->cnt_cmd;
-	while (i-- > 0)
+	tmp = info->cnt_cmd;
+	while (tmp-- > 0)
 		waitpid(-1, 0, 0);
+	close(info->pipe[i - 2][PIPE_R]);
 }

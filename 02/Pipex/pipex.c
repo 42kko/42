@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:37:21 by kko               #+#    #+#             */
-/*   Updated: 2022/11/03 08:53:06 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/04 11:07:46 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	**ft_pipe(t_lst info)
 	return (p);
 }
 
-void	parse_cmd(t_lst *info, int ac, char **av, char **envp)
+void	parse_cmd(t_lst *info, char **av, char **envp)
 {
 	info->infile = ft_strdup(av[1]);
 	if (av[1] && !ft_strncmp(av[1], "here_doc", 8) && av[1][8] == '\0')
@@ -39,10 +39,8 @@ void	parse_cmd(t_lst *info, int ac, char **av, char **envp)
 		info->doc = 1;
 		info->limiter = strdup(av[2]);
 		info->cnt_cmd -= 1;
-		if (ac != 6)
-			ft_exit("error: argument");
 	}
-	else if (open(info->infile, O_RDONLY) < 0)
+	else if (access(info->infile, R_OK | W_OK) < 0)
 	{
 		ft_putstr_fd(info->infile, 2);
 		ft_exit(": no such file or directory");
@@ -57,7 +55,7 @@ int	main(int ac, char **av, char **envp)
 	t_lst	info;
 
 	cnt_cmd(&info, ac);
-	parse_cmd(&info, ac, av, envp);
+	parse_cmd(&info, av, envp);
 	info.pipe = ft_pipe(info);
 	if (info.doc == 1)
 	{

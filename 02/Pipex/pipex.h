@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 11:52:16 by kko               #+#    #+#             */
-/*   Updated: 2022/11/03 08:53:40 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/04 11:07:37 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include "./Libft/libft.h"
 # define BUFFER_SIZE 1
 # define STDIN 0
@@ -44,7 +45,7 @@ void	ft_child(t_lst *info, int cur);
 void	ft_parent(t_lst *info, int cur);
 void	exec_pipe(t_lst *info);
 void	put_cmd(t_lst *info, char **av);
-void	parse_cmd(t_lst *info, int ac, char **av, char **envp);
+void	parse_cmd(t_lst *info, char **av, char **envp);
 void	put_path(t_lst *info, char *arr, int cur);
 void	cnt_cmd(t_lst *info, int ac);
 void	ft_path(t_lst *info, int i);
