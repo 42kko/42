@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:28:04 by kko               #+#    #+#             */
-/*   Updated: 2022/11/04 11:05:22 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/07 09:19:51 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_path(t_lst *info, int i)
 	char	*s;
 
 	s = info->cmd[i][0];
-	i = access(s, X_OK);
+	i = access(s, F_OK | X_OK);
 	if (i != 0)
 	{
 		ft_msg_cmd(s);
@@ -45,7 +45,7 @@ void	put_path(t_lst *info, char *arr, int cur)
 	while (info->path[i])
 	{
 		tmp = ft_strjoin(info->path[i], arr);
-		if (access(tmp, F_OK) == 0)
+		if (access(tmp, F_OK | X_OK) == 0)
 		{
 			info->cmd[cur][0] = tmp;
 			free(tmp1);

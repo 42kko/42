@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:37:21 by kko               #+#    #+#             */
-/*   Updated: 2022/11/07 11:22:29 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/07 11:21:30 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,15 @@ int	main(int ac, char **av, char **envp)
 {
 	t_lst	info;
 
-	if (ac != 5)
-		ft_exit("error : argument");
 	cnt_cmd(&info, ac);
 	parse_cmd(&info, av, envp);
 	info.pipe = ft_pipe(info);
+	if (info.doc == 1)
+	{
+		info.pipe_doc = (int *)malloc(sizeof(int) * 2);
+		if (pipe(info.pipe_doc) < 0)
+			ft_exit("pipe error");
+	}
 	info.outfile = ft_strdup(av[ac - 1]);
 	exec_pipe(&info);
 	free_util(&info);

@@ -50,7 +50,7 @@ SRCS_B = ft_lstnew.c \
 		 ft_lstmap.c
 
 OBJS = $(SRCS:.c=.o)
-OBJS_B = $(SRCS_B:.c=.o)
+OBJS_B = $(SRCS_B:.c=.o) $(SRCS:.c=.o)
 
 ifdef WITH_BONUS
 	OBJS_F = $(OBJS_B)
