@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:30:05 by kko               #+#    #+#             */
-/*   Updated: 2022/11/07 12:07:35 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/07 12:15:04 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_child(t_lst *info, int cur)
 		dup2(info->pipe[cur - 1][PIPE_R], STDIN);
 		dup2(fd, STDOUT);
 		close(fd);
-		close(info->pipe[cur - 1][PIPE_R]); //원래
+		close(info->pipe[cur - 1][PIPE_R]);
 		execve(info->cmd[cur][0], info->cmd[cur], info->envp);
 	}
 	else
@@ -101,9 +101,7 @@ void	exec_pipe(t_lst *info)
 		else if (pid == 0)
 			ft_child(info, i);
 		else
-		{
 			ft_parent(info, i);
-		}
 		i++;
 	}
 	tmp = info->cnt_cmd;
