@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 11:52:16 by kko               #+#    #+#             */
-/*   Updated: 2022/11/04 11:07:37 by kko              ###   ########.fr       */
+/*   Updated: 2022/11/08 14:01:24 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include "./Libft/libft.h"
 # define BUFFER_SIZE 1
 # define STDIN 0
