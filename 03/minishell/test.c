@@ -5,51 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/31 10:48:18 by kko               #+#    #+#             */
-/*   Updated: 2022/11/04 16:49:02 by kko              ###   ########.fr       */
+/*   Created: 2022/11/09 09:21:22 by kko               #+#    #+#             */
+/*   Updated: 2022/11/09 22:02:17 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 #include <unistd.h>
+#include <stdlib.h>
 
-void	handler(int signum)
+typedef struct s_tree
 {
-	if (signum != SIGINT)
+	int	data;
+	struct s_tree *left;
+	struct s_tree *right;
+} tree;
+
+void	preorder (tree *node)
+{
+	if (node == 0)
 		return ;
-	printf("cntl c\n");
-	if (rl_on_new_line() == -1)
-		exit(1);
-	rl_replace_line("", 1);
-	rl_redisplay();
+	printf ("%d, ", node->data);
+	preorder(node->left);
+	preorder(node->right);
 }
 
-int		main(void)
+int	main()
 {
-	char			*line;
+	int cnt_node = 13; //총 노드수
+	tree *node;
 
-	signal(SIGINT, handler);
-	while (1)
+	node = (tree *)malloc(sizeof(tree) * (cnt_node + 1));
+	int i = 0;
+	while (i++ < cnt_node) //노드를 초기화시켜줌
 	{
-		line = readline("prompt> ");
-		if (line)
-		{
-			if (strcmp(line, "exit") == 0)
-				exit(0);
-			if (ret)
-				printf("output> %s\n", line);
-			add_history(line);
-			free(line);
-			line = NULL;
-		}
-		else
-			return (1);
+		node[i].data = i;
+		node[i].left = 0;
+		node[i].right = 0;
 	}
-	return (0);
+	i = 2;
+	while (i++ < cnt_node) //노드를 연결해줌
+	{
+		if (i % 2 == 0)
+			node[i / 2].left = &node[i];
+		else
+			node[i / 2].right = &node[i];
+	}
+	// 노드탐색
+	preorder(&node[0]);
+	print
 }
