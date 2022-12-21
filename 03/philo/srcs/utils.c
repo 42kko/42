@@ -1,18 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/28 16:40:21 by kko               #+#    #+#             */
-/*   Updated: 2022/12/21 18:15:25 by kko              ###   ########.fr       */
+/*   Created: 2022/12/21 18:42:46 by kko               #+#    #+#             */
+/*   Updated: 2022/12/21 22:03:45 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/philo.h"
 
-static int	ft_isdigit(int c)
+void	msleep(long long seconds)
+{
+	long long		time_gap;
+	struct timeval	start_time;
+	struct timeval	cur_time;
+
+	gettimeofday(&start_time, NULL);
+	while (TRUE)
+	{
+		gettimeofday(&cur_time, NULL);
+		time_gap = get_time_gap_ms(start_time, cur_time);
+		if (time_gap >= seconds)
+			return ;
+		usleep(100);
+	}
+}
+
+long long	get_time_gap_ms(struct timeval start_time, struct timeval cur_time)
+{
+	long long	ret;
+
+	ret = (cur_time.tv_usec - start_time.tv_usec) + \
+	(cur_time.tv_sec - start_time.tv_sec) * 1000000;
+	return (ret / 1000);
+}
+
+int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);

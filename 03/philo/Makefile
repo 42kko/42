@@ -1,0 +1,39 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: kko <kko@student.42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/11/09 15:22:25 by seokchoi          #+#    #+#              #
+#    Updated: 2022/12/21 21:53:06 by kko              ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+SRCS    = main.c init.c observe.c philo.c utils.c
+SOURCE	= srcs/
+OBJS	= ${addprefix ${SOURCE},${SRCS:.c=.o}}
+CC		= cc
+# CFLAGS	= -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra
+NAME    = philo
+HEAD	= includes
+LIBFT	= libft
+
+all:		${NAME}
+
+# .c.o:		${SRCS}
+# 			${CC} $(CFLAGS) -I ${HEAD} -c $^ -o ${^:.c=.o}
+
+${NAME}:	${OBJS}
+			$(CC) $(CFLAGS) -I $(HEAD) -o $(NAME) ${OBJS}
+
+clean:
+			rm -f ${OBJS}
+
+fclean:		clean
+			rm -f ${NAME}
+
+re:			fclean all
+
+.PHONY:		all clean fclean re
