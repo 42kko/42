@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:45:32 by kko               #+#    #+#             */
-/*   Updated: 2022/12/21 22:03:58 by kko              ###   ########.fr       */
+/*   Updated: 2022/12/26 23:32:21 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,20 @@ int	set_thread_args(t_thread_arg **thread_args, t_info info)
 {
 	int				i;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	*print_mutex;
 	struct timeval	start_time;
 
 	*thread_args = malloc(sizeof(t_thread_arg) * info.number);
 	forks = make_forks(info);
-	if (*thread_args == NULL || forks == NULL)
+	print_mutex = malloc(sizeof(t_thread_arg));
+	if (*thread_args == NULL || forks == NULL || print_mutex == NULL)
 	{
 		ft_free(thread_args, forks);
 		return (ARGS_SETTING_ERROR);
 	}
 	i = 0;
 	gettimeofday(&start_time, NULL);
+	pthread_mutex_init(print_mutex, NULL);
 	while (i < info.number)
 	{
 		memset(&((*thread_args)[i]), 0, sizeof(t_thread_arg));
@@ -48,6 +51,7 @@ int	set_thread_args(t_thread_arg **thread_args, t_info info)
 		(*thread_args)[i].id = i + 1;
 		(*thread_args)[i].forks = forks;
 		pthread_mutex_init(&((*thread_args)[i].time_mutex), NULL);
+		(*thread_args)[i].print_mutex = print_mutex;
 		(*thread_args)[i].start_time = start_time;
 		(*thread_args)[i].last_eat_time = start_time;
 		i++;

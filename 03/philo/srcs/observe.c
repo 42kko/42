@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:41:44 by kko               #+#    #+#             */
-/*   Updated: 2022/12/21 23:29:24 by kko              ###   ########.fr       */
+/*   Updated: 2022/12/27 02:56:26 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,27 @@ void	observe_philosophers(t_thread_arg *thread_args, t_info info)
 			return ;
 		if (is_everyone_eat(thread_args, info) == TRUE)
 			return ;
-	}	
+	}
 }
 
 int	is_anyone_die(t_thread_arg *thread_args, t_info info)
 {
-	int	i;
+	int				i;
+	long long		time_gap;
+	struct timeval	cur_time;
 
 	i = 0;
 	while (i < info.number)
 	{
-		if (thread_args[i].is_die == TRUE)
+		gettimeofday(&cur_time, NULL);
+		pthread_mutex_lock(&(thread_args[i].time_mutex));
+		time_gap = get_time_gap_ms(thread_args[i].last_eat_time, cur_time);
+		pthread_mutex_unlock(&(thread_args[i].time_mutex));
+		if (time_gap >= thread_args[i].info.die)
+		{
+			print_message(&thread_args[i], DIE_MES);
 			return (TRUE);
+		}
 		i++;
 	}
 	return (FALSE);
@@ -47,10 +56,8 @@ int	is_everyone_eat(t_thread_arg *thread_args, t_info info)
 	i = 0;
 	while (i < info.number)
 	{
-		pthread_mutex_lock(&thread_args[i].is_all_eat);
 		if (thread_args[i].is_all_eat == FALSE)
 			return (FALSE);
-		pthread_mutex_unlock(&thread_args[i].is_all_eat);
 		i++;
 	}
 	return (TRUE);

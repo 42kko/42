@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:42:59 by kko               #+#    #+#             */
-/*   Updated: 2022/12/21 22:58:45 by kko              ###   ########.fr       */
+/*   Updated: 2022/12/26 23:28:22 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,8 @@
 void	*philosopher(void *arg)
 {
 	t_thread_arg	*thread_arg;
-	pthread_t		th;
 
 	thread_arg = (t_thread_arg *)arg;
-	pthread_create(&th, NULL, is_over_die_time, (void *)thread_arg);
-	pthread_detach(th);
 	if (thread_arg->id % 2 == 0)
 		usleep(100);
 	while (TRUE)
@@ -36,22 +33,14 @@ void	eating(t_thread_arg *thread_arg)
 {
 	int				id;
 	int				number;
-	long long		time_gap;
-	struct timeval	cur_time;
 
 	id = thread_arg->id;
 	number = thread_arg->info.number;
 	pthread_mutex_lock(&(thread_arg->forks[id - 1]));
-	gettimeofday(&cur_time, NULL);
-	time_gap = get_time_gap_ms(thread_arg->start_time, cur_time);
-	printf("%lld %d %s\n", time_gap, thread_arg->id, FRK_MES);
+	print_message(thread_arg, FRK_MES);
 	pthread_mutex_lock(&(thread_arg->forks[id % number]));
-	gettimeofday(&cur_time, NULL);
-	time_gap = get_time_gap_ms(thread_arg->start_time, cur_time);
-	printf("%lld %d %s\n", time_gap, thread_arg->id, FRK_MES);
-	gettimeofday(&cur_time, NULL);
-	time_gap = get_time_gap_ms(thread_arg->start_time, cur_time);
-	printf("%lld %d %s\n", time_gap, thread_arg->id, EAT_MES);
+	print_message(thread_arg, FRK_MES);
+	print_message(thread_arg, EAT_MES);
 	pthread_mutex_lock(&(thread_arg->time_mutex));
 	gettimeofday(&(thread_arg->last_eat_time), NULL);
 	pthread_mutex_unlock(&(thread_arg->time_mutex));
@@ -76,25 +65,11 @@ void	after_eating(t_thread_arg *thread_arg)
 
 void	sleeping(t_thread_arg *thread_arg)
 {
-	int				id;
-	long long		time_gap;
-	struct timeval	cur_time;
-
-	id = thread_arg->id;
-	gettimeofday(&cur_time, NULL);
-	time_gap = get_time_gap_ms(thread_arg->start_time, cur_time);
-	printf("%lld %d %s\n", time_gap, thread_arg->id, SLP_MES);
+	print_message(thread_arg, SLP_MES);
 	msleep(thread_arg->info.sleep);
 }
 
 void	thinking(t_thread_arg *thread_arg)
 {
-	int				id;
-	long long		time_gap;
-	struct timeval	cur_time;
-
-	id = thread_arg->id;
-	gettimeofday(&cur_time, NULL);
-	time_gap = get_time_gap_ms(thread_arg->start_time, cur_time);
-	printf("%lld %d %s\n", time_gap, thread_arg->id, THK_MES);
-b}
+	print_message(thread_arg, THK_MES);
+}
