@@ -6,14 +6,15 @@
 #    By: kko <kko@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/09 15:22:25 by seokchoi          #+#    #+#              #
-#    Updated: 2022/12/27 03:59:59 by kko              ###   ########.fr        #
+#    Updated: 2022/12/27 04:15:56 by kko              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS    = main.c init.c observe.c philo.c utils.c
+SRCS    = main.c init.c philo.c utils.c waiting.c
 SOURCE	= srcs/
 OBJS	= ${addprefix ${SOURCE},${SRCS:.c=.o}}
 CC		= cc
+# CFLAGS	= -Wall -Werror -Wextra -g3 -fsanitize=address
 # CFLAGS	= -Wall -Werror -Wextra -g3 -fsanitize=thread
 CFLAGS	= -Wall -Werror -Wextra
 NAME    = philo
@@ -22,8 +23,8 @@ LIBFT	= libft
 
 all:		${NAME}
 
-# .c.o:		${SRCS}
-# 			${CC} $(CFLAGS) -I ${HEAD} -c $^ -o ${^:.c=.o}
+.c.o:		${SRCS}
+			${CC} $(CFLAGS) -I ${HEAD} -c $^ -o ${^:.c=.o}
 
 ${NAME}:	${OBJS}
 			$(CC) $(CFLAGS) -I $(HEAD) -o $(NAME) ${OBJS}

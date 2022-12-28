@@ -6,11 +6,11 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:42:46 by kko               #+#    #+#             */
-/*   Updated: 2022/12/26 23:26:06 by kko              ###   ########.fr       */
+/*   Updated: 2022/12/27 05:34:35 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "philo.h"
 
 void	msleep(long long seconds)
 {
@@ -38,7 +38,7 @@ long long	get_time_gap_ms(struct timeval start_time, struct timeval cur_time)
 	return (ret / 1000);
 }
 
-int	ft_isdigit(int c)
+static int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -46,7 +46,7 @@ int	ft_isdigit(int c)
 		return (0);
 }
 
-size_t	match_nub(const char *nptr, int sign)
+static size_t	match_nub(const char *nptr, int sign)
 {
 	size_t	ret;
 
@@ -88,16 +88,4 @@ int	ft_atoi(const char *nptr)
 		return (0);
 	i = match_nub(nptr, sign);
 	return (i * sign);
-}
-
-void	print_message(t_thread_arg *thread_arg, char *message)
-{
-	long long		time_gap;
-	struct timeval	cur_time;
-
-	pthread_mutex_lock(thread_arg->print_mutex);
-	gettimeofday(&cur_time, NULL);
-	time_gap = get_time_gap_ms(thread_arg->start_time, cur_time);
-	printf("%lld %d %s\n", time_gap, thread_arg->id, message);
-	pthread_mutex_unlock(thread_arg->print_mutex);
 }

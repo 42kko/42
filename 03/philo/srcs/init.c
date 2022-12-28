@@ -5,76 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 18:45:32 by kko               #+#    #+#             */
-/*   Updated: 2022/12/26 23:32:21 by kko              ###   ########.fr       */
+/*   Created: 2022/12/26 23:37:34 by kko               #+#    #+#             */
+/*   Updated: 2022/12/27 05:38:00 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
-
-void	make_philosophers(t_thread_arg *thread_args)
-{
-	int			i;
-	pthread_t	th;
-
-	i = 0;
-	while (i < thread_args->info.number)
-	{
-		pthread_create(&th, NULL, philosopher, (void *)&thread_args[i]);
-		pthread_detach(th);
-		i++;
-	}
-}
-
-int	set_thread_args(t_thread_arg **thread_args, t_info info)
-{
-	int				i;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	*print_mutex;
-	struct timeval	start_time;
-
-	*thread_args = malloc(sizeof(t_thread_arg) * info.number);
-	forks = make_forks(info);
-	print_mutex = malloc(sizeof(t_thread_arg));
-	if (*thread_args == NULL || forks == NULL || print_mutex == NULL)
-	{
-		ft_free(thread_args, forks);
-		return (ARGS_SETTING_ERROR);
-	}
-	i = 0;
-	gettimeofday(&start_time, NULL);
-	pthread_mutex_init(print_mutex, NULL);
-	while (i < info.number)
-	{
-		memset(&((*thread_args)[i]), 0, sizeof(t_thread_arg));
-		(*thread_args)[i].info = info;
-		(*thread_args)[i].id = i + 1;
-		(*thread_args)[i].forks = forks;
-		pthread_mutex_init(&((*thread_args)[i].time_mutex), NULL);
-		(*thread_args)[i].print_mutex = print_mutex;
-		(*thread_args)[i].start_time = start_time;
-		(*thread_args)[i].last_eat_time = start_time;
-		i++;
-	}
-	return (ARGS_SETTING_SUCCESS);
-}
-
-pthread_mutex_t	*make_forks(t_info info)
-{
-	int				i;
-	pthread_mutex_t	*ret;
-
-	ret = malloc(sizeof(pthread_mutex_t) * info.number);
-	if (ret == NULL)
-		return (NULL);
-	i = 0;
-	while (i < info.number)
-	{
-		pthread_mutex_init(&(ret[i]), NULL);
-		i++;
-	}
-	return (ret);
-}
+#include "philo.h"
 
 int	initial_check(int ac, char **av)
 {
@@ -86,6 +22,8 @@ int	initial_check(int ac, char **av)
 	while (av[i])
 	{
 		if (ft_atoi(av[i]) < 0)
+			return (-1);
+		if (ft_atoi(av[i]) == 0)
 			return (-1);
 		i++;
 	}
@@ -99,7 +37,61 @@ int	ft_info(t_info *info, char **av)
 	info->die = ft_atoi(av[2]);
 	info->eat = ft_atoi(av[3]);
 	info->sleep = ft_atoi(av[4]);
+	gettimeofday(&info->start_time, NULL);
 	if (av[5] != 0)
 		info->must_eat = ft_atoi(av[5]);
 	return (0);
+}
+
+pthread_mutex_t	*get_fork(t_info info, int i)
+{
+	pthread_mutex_t	*ret;
+
+	ret = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * info.number);
+	if (ret == NULL)
+		return (NULL);
+	while (i < info.number)
+	{
+		pthread_mutex_init(&ret[i], NULL);
+		i++;
+	}
+	return (ret);
+}
+
+t_thread_arg	*get_thread(t_info info)
+{
+	t_thread_arg	*new;
+
+	new = (t_thread_arg *)malloc(sizeof(t_thread_arg) * info.number);
+	if (new == NULL)
+		return (NULL);
+	memset(new, 0, sizeof(t_thread_arg) * info.number);
+	return (new);
+}
+
+int	set_thread_args(t_thread_arg **thread_arg, t_info info, int i)
+{
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	*print_mutex;
+	pthread_mutex_t	*all_eat_mutex;
+
+	*thread_arg = get_thread(info);
+	fork = get_fork(info, 0);
+	print_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	all_eat_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (thread_arg == NULL || fork == NULL)
+		return (free_init(thread_arg, fork));
+	pthread_mutex_init(print_mutex, NULL);
+	pthread_mutex_init(all_eat_mutex, NULL);
+	while (i < info.number)
+	{
+		(*thread_arg)[i].info = info;
+		(*thread_arg)[i].id = i + 1;
+		pthread_mutex_init(&((*thread_arg)[i].time_mutex), NULL);
+		(*thread_arg)[i].fork = fork;
+		(*thread_arg)[i].print_mutex = print_mutex;
+		(*thread_arg)[i].all_eat_mutex = all_eat_mutex;
+		i++;
+	}
+	return (ARGS_SETTING_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:36:19 by kko               #+#    #+#             */
-/*   Updated: 2022/12/26 23:26:28 by kko              ###   ########.fr       */
+/*   Updated: 2022/12/27 05:37:20 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,49 +32,49 @@
 
 typedef struct s_info
 {
-	int	number;
-	int	die;
-	int	eat;
-	int	sleep;
-	int	must_eat;
+	int				number;
+	int				die;
+	int				eat;
+	int				sleep;
+	int				must_eat;
+	struct timeval	start_time;
 }	t_info;
 
 typedef struct s_thread_arg
 {
 	t_info			info;
 	int				id;
+	int				eat_cnt;
 	int				is_die;
 	int				is_all_eat;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	time_mutex;
+	pthread_mutex_t	*fork;
 	pthread_mutex_t	*print_mutex;
-	struct timeval	start_time;
-	struct timeval	last_eat_time;
-	int				eat_count;
+	pthread_mutex_t	*all_eat_mutex;
+	pthread_mutex_t	time_mutex;
+	struct timeval	last_eat;
 }	t_thread_arg;
 
+//main
+int				free_init(t_thread_arg **thread_arg, pthread_mutex_t *fork);
+void			print_msg(t_thread_arg *thread_arg, char *msg);
+
+//init
+int				initial_check(int ac, char **av);
+int				ft_info(t_info *info, char **av);
+t_thread_arg	*get_thread(t_info info);
+pthread_mutex_t	*get_fork(t_info info, int i);
+int				set_thread_args(t_thread_arg **thread_arg, t_info info, int i);
+
+//utils
 void			msleep(long long seconds);
 long long		get_time_gap_ms(struct timeval start_time, \
 struct timeval cur_time);
-int				ft_isdigit(int c);
-size_t			match_nub(const char *nptr, int sign);
 int				ft_atoi(const char *nptr);
+
+//philo
 void			make_philosophers(t_thread_arg *thread_args);
-int				set_thread_args(t_thread_arg **thread_args, t_info info);
-pthread_mutex_t	*make_forks(t_info info);
-int				initial_check(int ac, char **av);
-void			print_message(t_thread_arg *thread_arg, char *message);
-int				ft_info(t_info *info, char **av);
-void			*philosopher(void *arg);
-void			eating(t_thread_arg *thread_arg);
-void			after_eating(t_thread_arg *thread_arg);
-void			sleeping(t_thread_arg *thread_arg);
-void			thinking(t_thread_arg *thread_arg);
-void			observe_philosophers(t_thread_arg *thread_args, t_info info);
-int				is_anyone_die(t_thread_arg *thread_args, t_info info);
-int				is_everyone_eat(t_thread_arg *thread_args, t_info info);
-void			*is_over_die_time(void *arg);
-void			ft_free(t_thread_arg **thread_args, \
-pthread_mutex_t	*forks);
+
+//waiting
+void			waiting_philo(t_thread_arg *thread_args, t_info info);
 
 #endif

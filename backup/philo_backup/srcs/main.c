@@ -6,17 +6,17 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:32:04 by kko               #+#    #+#             */
-/*   Updated: 2022/12/27 03:57:05 by kko              ###   ########.fr       */
+/*   Updated: 2022/12/27 04:01:00 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
-// void	ft_free(t_thread_arg **thread_args, pthread_mutex_t	*forks)
-// {
-// 	free(*thread_args);
-// 	free(forks);
-// }
+void	ft_free(t_thread_arg **thread_args, pthread_mutex_t	*forks)
+{
+	free(*thread_args);
+	free(forks);
+}
 
 int	main(int ac, char **av)
 {
@@ -33,12 +33,11 @@ int	main(int ac, char **av)
 		printf("err: \n");
 		return (1);
 	}
-	if (set_thread_args(&thread_args, info, 0) == ARGS_SETTING_ERROR)
+	if (set_thread_args(&thread_args, info) == ARGS_SETTING_ERROR)
 	{
 		printf("err\n");
 		return (1);
 	}
 	make_philosophers(thread_args);
-	waiting_philo(thread_args, info);
-	exit(0);
+	observe_philosophers(thread_args, info);
 }
