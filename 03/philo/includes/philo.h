@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:36:19 by kko               #+#    #+#             */
-/*   Updated: 2022/12/27 05:37:20 by kko              ###   ########.fr       */
+/*   Updated: 2023/01/02 14:14:17 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_thread_arg
 
 //main
 int				free_init(t_thread_arg **thread_arg, pthread_mutex_t *fork);
+void			print_msg_die(t_thread_arg *thread_arg, char *msg);
 void			print_msg(t_thread_arg *thread_arg, char *msg);
 
 //init

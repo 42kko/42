@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 02:54:47 by kko               #+#    #+#             */
-/*   Updated: 2022/12/27 05:37:28 by kko              ###   ########.fr       */
+/*   Updated: 2023/01/02 14:49:24 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	is_anyone_die(t_thread_arg *thread_arg, t_info info)
 		pthread_mutex_unlock(&(thread_arg[i].time_mutex));
 		if (time_gap >= thread_arg[i].info.die)
 		{
-			print_msg(&thread_arg[i], DIE_MES);
+			print_msg_die(&thread_arg[i], DIE_MES);
 			return (TRUE);
 		}
 		i++;
@@ -42,10 +42,16 @@ static int	is_everyone_eat(t_thread_arg *thread_args, t_info info)
 	i = 0;
 	while (i < info.number)
 	{
+		pthread_mutex_lock(thread_args->all_eat_mutex);
 		if (thread_args[i].is_all_eat == FALSE)
+		{
+			pthread_mutex_unlock(thread_args->all_eat_mutex);
 			return (FALSE);
+		}
+		pthread_mutex_unlock(thread_args->all_eat_mutex);
 		i++;
 	}
+	pthread_mutex_lock(thread_args->print_mutex);
 	return (TRUE);
 }
 
@@ -58,7 +64,10 @@ void	waiting_philo(t_thread_arg *thread_args, t_info info)
 	{
 		if (is_anyone_die(thread_args, info) == TRUE)
 			return ;
-		if (is_everyone_eat(thread_args, info) == TRUE)
-			return ;
+		if (thread_args->info.must_eat != 0)
+		{
+			if (is_everyone_eat(thread_args, info) == TRUE)
+				return ;
+		}
 	}
 }

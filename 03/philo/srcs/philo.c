@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 00:58:16 by kko               #+#    #+#             */
-/*   Updated: 2022/12/27 05:39:14 by kko              ###   ########.fr       */
+/*   Updated: 2023/01/02 14:49:44 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ static void	after_eating(t_thread_arg *thread_arg)
 	pthread_mutex_unlock(&thread_arg->fork[thread_arg->id % number]);
 	(thread_arg->eat_cnt)++;
 	if (must_eat != 0 && thread_arg->eat_cnt == must_eat)
+	{
+		pthread_mutex_lock(thread_arg->all_eat_mutex);
 		thread_arg->is_all_eat = TRUE;
+		pthread_mutex_unlock(thread_arg->all_eat_mutex);
+	}
 	print_msg(thread_arg, SLP_MES);
 	msleep(thread_arg->info.sleep);
 }
@@ -51,11 +55,11 @@ static void	thinking(t_thread_arg *thread_arg)
 
 static void	*philosopher(void *arg)
 {
-	t_thread_arg	*thread_arg;
+	t_thread_arg	*thread_arg
 
 	thread_arg = (t_thread_arg *)arg;
 	if (thread_arg->id % 2 == 0)
-		usleep(1000);
+		usleep(10000);
 	while (TRUE)
 	{
 		eating(thread_arg);
@@ -72,6 +76,12 @@ void	make_philosophers(t_thread_arg *thread_args)
 
 	i = 0;
 	gettimeofday(&thread_args[i].info.start_time, NULL);
+	if (thread_args->info.number == 1)
+	{
+		print_msg(thread_args, FRK_MES);
+		gettimeofday(&thread_args[i].last_eat, NULL);
+		return ;
+	}
 	while (i < thread_args->info.number)
 	{
 		gettimeofday(&thread_args[i].last_eat, NULL);
