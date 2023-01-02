@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 00:58:16 by kko               #+#    #+#             */
-/*   Updated: 2023/01/02 14:49:44 by kko              ###   ########.fr       */
+/*   Updated: 2023/01/02 15:07:30 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	thinking(t_thread_arg *thread_arg)
 
 static void	*philosopher(void *arg)
 {
-	t_thread_arg	*thread_arg
+	t_thread_arg	*thread_arg;
 
 	thread_arg = (t_thread_arg *)arg;
 	if (thread_arg->id % 2 == 0)

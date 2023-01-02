@@ -6,7 +6,7 @@
 #    By: kko <kko@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/09 15:22:25 by seokchoi          #+#    #+#              #
-#    Updated: 2023/01/02 14:48:35 by kko              ###   ########.fr        #
+#    Updated: 2023/01/02 15:07:57 by kko              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,6 @@ SRCS    = main.c init.c philo.c utils.c waiting.c
 SOURCE	= srcs/
 OBJS	= ${addprefix ${SOURCE},${SRCS:.c=.o}}
 CC		= cc
-# CFLAGS	= -Wall -Werror -Wextra -g3 -fsanitize=address
-# CFLAGS	= -Wall -Werror -Wextra -g3 -fsanitize=thread
 CFLAGS	= -Wall -Werror -Wextra
 NAME    = philo
 HEAD	= includes
