@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 11:52:36 by jihonkim          #+#    #+#             */
-/*   Updated: 2022/12/30 17:21:11 by kko              ###   ########.fr       */
+/*   Updated: 2023/01/03 10:05:03 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int is_wildsub(char *wild_str, char *file_name, int index)
 	int	i;
 
 	i = 0;
-	while (index + i <= ft_strlen(file_name))
+	while (index + i <= (int)ft_strlen(file_name))
 	{
 		if (is_wild(&wild_str[index + 1],&file_name[index + i]))
 		{

@@ -6,16 +6,16 @@
 #    By: kko <kko@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/09 15:22:25 by seokchoi          #+#    #+#              #
-#    Updated: 2023/01/02 15:07:57 by kko              ###   ########.fr        #
+#    Updated: 2023/01/03 13:12:50 by kko              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS    = main.c init.c philo.c utils.c waiting.c
+SRCS	= main.c init.c philo.c utils.c waiting.c
 SOURCE	= srcs/
 OBJS	= ${addprefix ${SOURCE},${SRCS:.c=.o}}
 CC		= cc
 CFLAGS	= -Wall -Werror -Wextra
-NAME    = philo
+NAME	= philo
 HEAD	= includes
 LIBFT	= libft
 

@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 21:25:03 by seokchoi          #+#    #+#             */
-/*   Updated: 2023/01/02 20:23:37 by kko              ###   ########.fr       */
+/*   Updated: 2023/01/03 10:04:46 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ char			*set_tok_cmd(t_token *tok, int i);
 void			push_index_com(char *line, int *idx);
 void			jump_redir(char *line, int *idx, int i);
 char			*get_tok_cmd(t_token *tok, int idx);
-int				com_wild(t_token *tok, int idx, char *s);
+int				com_wild(t_token *tok, int j);
 
 //wildcard3
 int				is_wild(char *wild_str, char *file_name);

@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 11:52:27 by jihonkim          #+#    #+#             */
-/*   Updated: 2023/01/02 20:26:26 by kko              ###   ########.fr       */
+/*   Updated: 2023/01/03 10:04:36 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ char	*get_tok_cmd(t_token *tok, int idx)
 	return (ret);
 }
 
-int	com_wild(t_token *tok, int idx, char *s)
+int	com_wild(t_token *tok, int j)
 {
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	tmp = get_tok_cmd(tok, idx);
+	tmp = get_tok_cmd(tok, j);
 	if (ft_strchr(tmp, '*') == 0)
 		return (free_wild(tmp, 0));
 	while (tmp[i])
