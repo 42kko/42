@@ -6,7 +6,7 @@
 /*   By: kko <kko@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 00:58:16 by kko               #+#    #+#             */
-/*   Updated: 2023/01/02 15:07:30 by kko              ###   ########.fr       */
+/*   Updated: 2023/01/05 11:34:51 by kko              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static void	eating(t_thread_arg *thread_arg)
 	int	number;
 
 	number = thread_arg->info.number;
-	pthread_mutex_lock(&(thread_arg->time_mutex));
 	pthread_mutex_lock(&thread_arg->fork[thread_arg->id - 1]);
 	print_msg(thread_arg, FRK_MES);
 	pthread_mutex_lock(&thread_arg->fork[thread_arg->id % number]);
 	print_msg(thread_arg, FRK_MES);
 	print_msg(thread_arg, EAT_MES);
+	pthread_mutex_lock(&(thread_arg->time_mutex));
 	gettimeofday(&(thread_arg->last_eat), NULL);
 	pthread_mutex_unlock(&(thread_arg->time_mutex));
 	msleep(thread_arg->info.eat);
